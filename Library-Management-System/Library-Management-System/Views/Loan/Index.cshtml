@@ -1,0 +1,35 @@
+﻿@model IEnumerable<Library_Management_System.Models.LoanViewModel>
+
+<div class="container">
+    <h2>Loans</h2>
+    <a href="@Url.Action("Create")" class="btn btn-success mb-2">Create New Loan</a>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>User Name</th>
+                <th>Book Title</th>
+                <th>Loan Date</th>
+                <th>Due Date</th>
+                <th>Return Date</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var loan in Model)
+            {
+                <tr>
+                    <td>@loan.UserName</td>
+                    <td>@loan.BookTitle</td>
+                    <td>@loan.LoanDate.ToString("yyyy-MM-dd")</td>
+                    <td>@loan.DueDate.ToString("yyyy-MM-dd")</td>
+                    <td>@(loan.ReturnDate.HasValue ? loan.ReturnDate.Value.ToString("yyyy-MM-dd") : "Not Returned")</td>
+                    <td>
+                        <a href="@Url.Action("Edit", new { id = loan.Id })" class="btn btn-primary">Edit</a>
+                        <a href="@Url.Action("Details", new { id = loan.Id })" class="btn btn-info">View</a>
+                        <a href="@Url.Action("Delete", new { id = loan.Id })" class="btn btn-danger">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

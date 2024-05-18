@@ -1,0 +1,45 @@
+﻿@model Library_Management_System.Models.LoanViewModel
+
+<div class="container">
+    <h2>Edit Loan</h2>
+    <form asp-action="Edit" method="post">
+        <div class="form-group">
+            <label asp-for="UserId">User</label>
+            <select asp-for="UserId" class="form-control">
+                <!-- Assumindo que ViewBag.Users contém uma lista de usuários -->
+                @foreach (var user in ViewBag.Users)
+                {
+                    <option value="@(user.Id == Model.UserId ? "selected" : "")">@user.Name</option>
+                }
+            </select>
+            <span asp-validation-for="UserId" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="BookId">Book</label>
+            <select asp-for="BookId" class="form-control">
+                <!-- Assumindo que ViewBag.Books contém uma lista de livros -->
+                @foreach (var book in ViewBag.Books)
+                {
+                    <option value="@(book.Id == Model.BookId ? "selected" : "")">@book.Title</option>
+                }
+            </select>
+            <span asp-validation-for="BookId" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="LoanDate"></label>
+            <input asp-for="LoanDate" class="form-control" />
+            <span asp-validation-for="LoanDate" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="DueDate"></label>
+            <input asp-for="DueDate" class="form-control" />
+            <span asp-validation-for="DueDate" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="ReturnDate"></label>
+            <input asp-for="ReturnDate" class="form-control" />
+            <span asp-validation-for="ReturnDate" class="text-danger"></span>
+        </div>
+        <button type="submit" class="btn btn-primary">Save</button>
+    </form>
+</div>

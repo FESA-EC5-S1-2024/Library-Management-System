@@ -6,7 +6,7 @@ namespace Library_Management_System.DAO
     {
         public static SqlConnection GetConexao()
         {
-            string strCon = "Data Source=LOCALHOST; Database=AULADB; user id=sa; password=123456";
+            string strCon = "Data Source=146.235.34.235; Database=LMS; user id=sa; password=RogerServer3301";
             SqlConnection conexao = new SqlConnection(strCon);
             conexao.Open();
             return conexao;
