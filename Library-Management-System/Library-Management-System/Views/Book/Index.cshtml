@@ -1,0 +1,33 @@
+﻿@model IEnumerable<Library_Management_System.Models.BookViewModel>
+
+<div class="container">
+    <h2>Books</h2>
+    <a href="@Url.Action("Create")" class="btn btn-success mb-2">Create New Book</a>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Author Name</th>
+                <th>Category</th>
+                <th>Published Year</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var book in Model)
+            {
+                <tr>
+                    <td>@book.Title</td>
+                    <td>@book.AuthorName</td>
+                    <td>@book.CategoryDescription</td>
+                    <td>@book.PublishedYear</td>
+                    <td>
+                        <a href="@Url.Action("Edit", new { id = book.Id })" class="btn btn-primary">Edit</a>
+                        <a href="@Url.Action("Details", new { id = book.Id })" class="btn btn-info">View</a>
+                        <a href="@Url.Action("Delete", new { id = book.Id })" class="btn btn-danger">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

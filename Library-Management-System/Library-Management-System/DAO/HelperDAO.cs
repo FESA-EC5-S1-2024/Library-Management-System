@@ -25,7 +25,7 @@ namespace Library_Management_System.DAO
                     comando.CommandType = CommandType.StoredProcedure;
                     if (parametros != null)
                         comando.Parameters.AddRange(parametros);
-                    comando.ExecuteNonQuery();
+                    comando.ExecuteNonQuery(); // erro chato
                     if (consultaUltimoIdentity)
                     {
                         string sql = "select isnull(@@IDENTITY,0)";
