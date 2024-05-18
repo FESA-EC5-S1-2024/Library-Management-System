@@ -1,6 +1,6 @@
 
 ---------------------------------------------------------------------------
---1. Criação das tabelas
+--1. Criacao das tabelas
 ---------------------------------------------------------------------------
 
 -- Create LMS database
@@ -10,7 +10,7 @@ CREATE DATABASE LMS;
 USE LMS;
 
 ---------------------------------------------------------------------------
---2. Criação das tabelas
+--2. Criacao das tabelas
 ---------------------------------------------------------------------------
 
 -- Create User table
@@ -68,7 +68,7 @@ CREATE TABLE [dbo].[Loan]
 );
 
 ---------------------------------------------------------------------------
---3. Criação das Stored Procedures de Listagem
+--3. Criacao das Stored Procedures de Listagem
 ---------------------------------------------------------------------------
 
 -- Create spListagemUser
@@ -133,7 +133,7 @@ BEGIN
 END
 
 ---------------------------------------------------------------------------
---4. Criação das Stored Procedures genéricas
+--4. Criacao das Stored Procedures genericas
 ---------------------------------------------------------------------------
 
 -- Create spDelete
@@ -145,13 +145,13 @@ BEGIN
     DECLARE @sql NVARCHAR(MAX);
     DECLARE @primaryKey NVARCHAR(50);
 
-    -- Assume que a coluna de chave primária segue o padrão <NomeDaTabela>Id
+    -- Assume que a coluna de chave primaria segue o padrao <NomeDaTabela>Id
     SET @primaryKey = @tabela + 'Id';
 
-    -- Constrói a query dinamicamente
+    -- Constrï¿½i a query dinamicamente
     SET @sql = 'DELETE FROM ' + @tabela + ' WHERE ' + @primaryKey + ' = @id';
 
-    -- Executa a query dinâmica com o parâmetro @id
+    -- Executa a query dinamica com o parametro @id
     EXEC sp_executesql @sql, N'@id INT', @id;
 END
 
@@ -164,13 +164,13 @@ BEGIN
     DECLARE @sql NVARCHAR(MAX);
     DECLARE @primaryKey NVARCHAR(50);
 
-    -- Assume que a coluna de chave primária segue o padrão <NomeDaTabela>Id
+    -- Assume que a coluna de chave primaria segue o padrao <NomeDaTabela>Id
     SET @primaryKey = @tabela + 'Id';
 
-    -- Constrói a query dinamicamente
+    -- Constroi a query dinamicamente
     SET @sql = 'SELECT * FROM ' + @tabela + ' WHERE ' + @primaryKey + ' = @id';
 
-    -- Executa a query dinâmica com o parâmetro @id
+    -- Executa a query dinamica com o parametro @id
     EXEC sp_executesql @sql, N'@id INT', @id;
 END
 
@@ -182,18 +182,18 @@ BEGIN
     DECLARE @sql NVARCHAR(MAX);
     DECLARE @primaryKey NVARCHAR(MAX);
 
-    -- Assume que a coluna de chave primária segue o padrão <NomeDaTabela>Id
+    -- Assume que a coluna de chave primaria segue o padrao <NomeDaTabela>Id
     SET @primaryKey = @tabela + 'Id';
 
-    -- Constrói a query dinamicamente
+    -- Constrï¿½i a query dinamicamente
     SET @sql = 'SELECT ISNULL(MAX(' + @primaryKey + '), 0) + 1 AS ProximoId FROM ' + @tabela;
 
-    -- Executa a query dinâmica
+    -- Executa a query dinamica
     EXEC sp_executesql @sql;
 END
 
 ---------------------------------------------------------------------------
---5. Criação das Stored Procedures de CRUD da tabela User
+--5. Criacao das Stored Procedures de CRUD da tabela User
 ---------------------------------------------------------------------------
 
 -- Create spInsert_User
@@ -231,7 +231,7 @@ BEGIN
 END
 
 ---------------------------------------------------------------------------
---6. Criação das Stored Procedures de CRUD da tabela Author
+--6. Criacao das Stored Procedures de CRUD da tabela Author
 ---------------------------------------------------------------------------
 
 -- Create spInsert_Author
@@ -263,7 +263,7 @@ BEGIN
 END
 
 ---------------------------------------------------------------------------
---7. Criação das Stored Procedures de CRUD da tabela Category
+--7. Criacao das Stored Procedures de CRUD da tabela Category
 ---------------------------------------------------------------------------
 
 -- Create spInsert_Category
@@ -289,11 +289,11 @@ BEGIN
 END
 
 ---------------------------------------------------------------------------
---8. Criação das Stored Procedures de CRUD da tabela Book
+--8. Criacao das Stored Procedures de CRUD da tabela Book
 ---------------------------------------------------------------------------
 
 -- Create spInsert_Book
-CREATE PROCEDURE [dbo].[spInsert_Book] 
+CREATE OR ALTER PROCEDURE [dbo].[spInsert_Book] 
     @AuthorId INT,
     @CategoryId INT,
     @Title NVARCHAR(200),
@@ -309,7 +309,7 @@ BEGIN
 END
 
 -- Create spUpdate_Book
-CREATE PROCEDURE [dbo].[spUpdate_Book] 
+CREATE OR ALTER PROCEDURE [dbo].[spUpdate_Book] 
     @BookId INT,
     @AuthorId INT,
     @CategoryId INT,
@@ -330,11 +330,11 @@ BEGIN
 END
 
 ---------------------------------------------------------------------------
---9. Criação das Stored Procedures de CRUD da tabela Loan
+--9. Criacao das Stored Procedures de CRUD da tabela Loan
 ---------------------------------------------------------------------------
 
 -- Create spInsert_Loan
-CREATE PROCEDURE [dbo].[spInsert_Loan] 
+CREATE OR ALTER PROCEDURE [dbo].[spInsert_Loan] 
     @UserId INT,
     @BookId INT,
     @LoanDate DATETIME,
@@ -349,7 +349,7 @@ BEGIN
 END
 
 -- Create spUpdate_Loan
-CREATE PROCEDURE [dbo].[spUpdate_Loan] 
+CREATE OR ALTER PROCEDURE [dbo].[spUpdate_Loan] 
     @LoanId INT,
     @UserId INT,
     @BookId INT,
