@@ -99,7 +99,7 @@ namespace Library_Management_System.Controllers
 
         }
 
-        /*
+        
         public override void OnActionExecuting(ActionExecutingContext context)
         {
             if (ExigeAutenticacao && !HelperController.VerificaUserLogado(HttpContext.Session))
@@ -109,6 +109,6 @@ namespace Library_Management_System.Controllers
                 ViewBag.Logado = true;
                 base.OnActionExecuting(context);
             }
-        } */
+        }
     }
 }
