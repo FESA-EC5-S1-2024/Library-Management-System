@@ -373,3 +373,12 @@ C:\Users\muril\Desktop\Projetos\LMS\Library-Management-System\Library-Management
 C:\Users\muril\Desktop\Projetos\LMS\Library-Management-System\Library-Management-System\obj\Debug\netcoreapp3.1\Razor\Views\User\Create.cshtml.g.cs
 C:\Users\muril\Desktop\Projetos\LMS\Library-Management-System\Library-Management-System\obj\Debug\netcoreapp3.1\Razor\Views\User\Delete.cshtml.g.cs
 C:\Users\muril\Desktop\Projetos\LMS\Library-Management-System\Library-Management-System\obj\Debug\netcoreapp3.1\Razor\Views\User\Edit.cshtml.g.cs
+C:\Users\muril\Desktop\Projetos\LMS\Library-Management-System\Library-Management-System\obj\Debug\netcoreapp3.1\Razor\Views\Author\Create.cshtml.g.cs
+C:\Users\muril\Desktop\Projetos\LMS\Library-Management-System\Library-Management-System\obj\Debug\netcoreapp3.1\Razor\Views\Author\Delete.cshtml.g.cs
+C:\Users\muril\Desktop\Projetos\LMS\Library-Management-System\Library-Management-System\obj\Debug\netcoreapp3.1\Razor\Views\Author\Edit.cshtml.g.cs
+C:\Users\muril\Desktop\Projetos\LMS\Library-Management-System\Library-Management-System\obj\Debug\netcoreapp3.1\Razor\Views\Book\Create.cshtml.g.cs
+C:\Users\muril\Desktop\Projetos\LMS\Library-Management-System\Library-Management-System\obj\Debug\netcoreapp3.1\Razor\Views\Book\Delete.cshtml.g.cs
+C:\Users\muril\Desktop\Projetos\LMS\Library-Management-System\Library-Management-System\obj\Debug\netcoreapp3.1\Razor\Views\Book\Edit.cshtml.g.cs
+C:\Users\muril\Desktop\Projetos\LMS\Library-Management-System\Library-Management-System\obj\Debug\netcoreapp3.1\Razor\Views\Loan\Create.cshtml.g.cs
+C:\Users\muril\Desktop\Projetos\LMS\Library-Management-System\Library-Management-System\obj\Debug\netcoreapp3.1\Razor\Views\Loan\Delete.cshtml.g.cs
+C:\Users\muril\Desktop\Projetos\LMS\Library-Management-System\Library-Management-System\obj\Debug\netcoreapp3.1\Razor\Views\Loan\Edit.cshtml.g.cs

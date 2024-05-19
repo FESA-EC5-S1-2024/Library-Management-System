@@ -25,7 +25,7 @@ namespace Library_Management_System.DAO
                     comando.CommandType = CommandType.StoredProcedure;
                     if (parametros != null)
                         comando.Parameters.AddRange(parametros);
-                    comando.ExecuteNonQuery(); // erro chato
+                    comando.ExecuteNonQuery(); // erro chato - algo dá errado na hora de inserir, mas os parametros e o nome da procedure parece estar certo
                     if (consultaUltimoIdentity)
                     {
                         string sql = "select isnull(@@IDENTITY,0)";
