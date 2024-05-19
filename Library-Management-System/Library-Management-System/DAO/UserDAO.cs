@@ -35,7 +35,19 @@ namespace Library_Management_System.DAO {
 
         protected override void SetTabela() {
             Tabela = "User";
-            NomeSpListagem = "spListagem_User"; // Você pode ter uma stored procedure específica para listagem, se necessário
+            NomeSpListagem = "spListagem_User";
+        }
+
+        public UserViewModel ConsultaUsuario(string email) {
+            var p = new SqlParameter[]
+            {
+                new SqlParameter("email", email)
+            };
+            var tabela = HelperDAO.ExecutaProcSelect("spConsulta_User", p);
+            if (tabela.Rows.Count == 0)
+                return null;
+            else
+                return MontaModel(tabela.Rows[0]);
         }
     }
 }
