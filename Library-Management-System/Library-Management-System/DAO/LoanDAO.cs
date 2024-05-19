@@ -1,19 +1,24 @@
 ﻿using Library_Management_System.Models;
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 
 namespace Library_Management_System.DAO {
     class LoanDAO : PadraoDAO<LoanViewModel> {
-        protected override SqlParameter[] CriaParametros(LoanViewModel loan) {
-            SqlParameter[] p = new SqlParameter[6];
-            p[0] = new SqlParameter("LoanId", loan.Id);
-            p[1] = new SqlParameter("UserId", loan.UserId);
-            p[2] = new SqlParameter("BookId", loan.BookId);
-            p[3] = new SqlParameter("LoanDate", loan.LoanDate);
-            p[4] = new SqlParameter("DueDate", loan.DueDate);
-            p[5] = new SqlParameter("ReturnDate", HelperDAO.NullAsDbNull(loan.ReturnDate));
-            return p;
+        protected override SqlParameter[] CriaParametros(LoanViewModel loan, bool isInsert = false) {
+            List<SqlParameter> parametros = new List<SqlParameter>();
+
+            if (!isInsert) {
+                parametros.Add(new SqlParameter("@UserId", loan.Id));
+            }
+
+            parametros.Add(new SqlParameter("UserId", loan.UserId));
+            parametros.Add(new SqlParameter("BookId", loan.BookId));
+            parametros.Add(new SqlParameter("LoanDate", loan.LoanDate));
+            parametros.Add(new SqlParameter("DueDate", loan.DueDate));
+            parametros.Add(new SqlParameter("ReturnDate", HelperDAO.NullAsDbNull(loan.ReturnDate)));
+            return parametros.ToArray();
         }
 
         protected override LoanViewModel MontaModel(DataRow registro) {
@@ -29,7 +34,7 @@ namespace Library_Management_System.DAO {
 
         protected override void SetTabela() {
             Tabela = "Loan";
-            NomeSpListagem = "spListagemLoan";
+            NomeSpListagem = "spListagem_Loan";
         }
     }
 }
