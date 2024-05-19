@@ -1,4 +1,12 @@
-﻿// Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
-// for details on configuring this project to bundle and minify static web assets.
+﻿function deleteRecord(table, id) {
+    if (confirm('Confirma a exclusão do registro?'))
+        location.href = table + '/Delete?id=' + id;
+}
 
-// Write your JavaScript code.
+function displayImage() {
+    var oFReader = new FileReader();
+    oFReader.readAsDataURL(document.getElementById("Image").files[0]);
+    oFReader.onload = function (oFREvent) {
+        document.getElementById("imgPreview").src = oFREvent.target.result;
+    };
+}
