@@ -1,0 +1,28 @@
+﻿@model AuthorViewModel
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h2>Author Registration</h2>
+
+<form action="Save" method="post" class="col-md-6">
+    <input type="hidden" name="Operacao" value="@ViewBag.Operacao" />
+
+    <label for="Name" class="control-label">Name</label>
+    <input asp-for="Name" class="form-control" />
+    <span asp-validation-for="Name" class="text-danger"></span>
+    <br />
+
+    <label for="Country" class="control-label">Country</label>
+    <input asp-for="Country" class="form-control" />
+    <span asp-validation-for="Country" class="text-danger"></span>
+    <br />
+
+    <label for="Birthdate" class="control-label">Birthdate</label>
+    <input asp-for="Birthdate" type="date" value="@Model.Birthdate.ToString("yyyy-MM-dd")" class="form-control" />
+    <span asp-validation-for="Birthdate" class="text-danger"></span>
+    <br />
+
+    <br />
+    <input type="submit" value="Save" class="btn btn-info" />
+    <br />
+</form>
