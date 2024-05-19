@@ -210,6 +210,13 @@ BEGIN
     WHERE UserId = @UserId;
 END
 
+-- Create spConsulta_User
+CREATE OR ALTER PROCEDURE [dbo].[spConsulta_User] 
+    @Email NVARCHAR(100)
+AS
+BEGIN
+    SELECT * FROM [User] WHERE Email = @Email
+END
 
 ---------------------------------------------------------------------------
 --6. Criacao das Stored Procedures de CRUD da tabela Author

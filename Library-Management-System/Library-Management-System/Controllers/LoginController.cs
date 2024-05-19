@@ -1,26 +1,32 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Library_Management_System.DAO;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Library_Management_System.Controllers
 {
     public class LoginController : Controller
     {
+        private readonly UserDAO DAO;
+        public LoginController()
+        {
+            DAO = new UserDAO();
+        }
         public IActionResult Index()
         {
             return View();
         }
-        public IActionResult FazLogin(string usuario, string senha)
+        public IActionResult FazLogin(string email, string senha)
         {
-            //Este é apenas um exemplo, aqui você deve consultar na sua tabela de usuários
-            //se existe esse usuário e senha
-            if (usuario == "admin" && senha == "1234")
+            var usuario = DAO.ConsultaUsuario(email);
+            if (usuario != null && usuario.Password == senha)
             {
+                HttpContext.Session.SetString("Admin", usuario.TypeId.ToString());
                 HttpContext.Session.SetString("Logado", "true");
                 return RedirectToAction("index", "Home");
             }
             else
             {
-                ViewBag.Erro = "Usuário ou senha inválidos!";
+                ViewBag.Erro = "Email ou senha inválidos!";
                 return View("Index");
             }
         }
