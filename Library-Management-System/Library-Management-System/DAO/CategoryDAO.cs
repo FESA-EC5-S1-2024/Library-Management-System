@@ -1,15 +1,20 @@
 ﻿using Library_Management_System.Models;
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 
 namespace Library_Management_System.DAO {
     class CategoryDAO : PadraoDAO<CategoryViewModel> {
-        protected override SqlParameter[] CriaParametros(CategoryViewModel category) {
-            SqlParameter[] p = new SqlParameter[2];
-            p[0] = new SqlParameter("CategoryId", category.Id);
-            p[1] = new SqlParameter("Description", category.Description);
-            return p;
+        protected override SqlParameter[] CriaParametros(CategoryViewModel category, bool isInsert = false) {
+            List<SqlParameter> parametros = new List<SqlParameter>();
+
+            if (!isInsert) {
+                parametros.Add(new SqlParameter("@UserId", category.Id));
+            }
+
+            parametros.Add(new SqlParameter("Description", category.Description));
+            return parametros.ToArray();
         }
 
         protected override CategoryViewModel MontaModel(DataRow registro) {
@@ -21,7 +26,7 @@ namespace Library_Management_System.DAO {
 
         protected override void SetTabela() {
             Tabela = "Category";
-            NomeSpListagem = "spListagemCategory";
+            NomeSpListagem = "spListagem_Category";
         }
     }
 }

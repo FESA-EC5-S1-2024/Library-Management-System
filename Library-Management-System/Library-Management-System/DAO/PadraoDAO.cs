@@ -4,34 +4,27 @@ using System.Data.SqlClient;
 using System.Data;
 using System;
 
-namespace Library_Management_System.DAO
-{
-    public abstract class PadraoDAO<T> where T : PadraoViewModel
-    {
-        public PadraoDAO()
-        {
+namespace Library_Management_System.DAO {
+    public abstract class PadraoDAO<T> where T : PadraoViewModel {
+        public PadraoDAO() {
             SetTabela();
         }
 
         protected string Tabela { get; set; }
         protected string NomeSpListagem { get; set; } = "spListagem";
-        protected abstract SqlParameter[] CriaParametros(T model);
+        protected abstract SqlParameter[] CriaParametros(T model, bool isInsert = false);
         protected abstract T MontaModel(DataRow registro);
         protected abstract void SetTabela();
 
-        protected bool ChaveIdentity { get; set; } = false;
-        public virtual int Insert(T model)
-        {
-            return HelperDAO.ExecutaProc("spInsert_" + Tabela, CriaParametros(model), ChaveIdentity);
+        public virtual void Insert(T model) {
+            HelperDAO.ExecutaProc("spInsert_" + Tabela, CriaParametros(model, true));
         }
 
-
-        public virtual void Update(T model)
-        {
-            HelperDAO.ExecutaProc("spUpdate_" + Tabela, CriaParametros(model));
+        public virtual void Update(T model) {
+            HelperDAO.ExecutaProc("spUpdate_" + Tabela, CriaParametros(model, false));
         }
-        public virtual void Delete(int id)
-        {
+
+        public virtual void Delete(int id) {
             var p = new SqlParameter[]
             {
                 new SqlParameter("id", id),
@@ -39,8 +32,8 @@ namespace Library_Management_System.DAO
             };
             HelperDAO.ExecutaProc("spDelete", p);
         }
-        public virtual T Consulta(int id)
-        {
+
+        public virtual T Consulta(int id) {
             var p = new SqlParameter[]
             {
                 new SqlParameter("id", id),
@@ -52,17 +45,8 @@ namespace Library_Management_System.DAO
             else
                 return MontaModel(tabela.Rows[0]);
         }
-        public virtual int ProximoId()
-        {
-            var p = new SqlParameter[]
-            {
-                new SqlParameter("tabela", Tabela)
-            };
-            var tabela = HelperDAO.ExecutaProcSelect("spProximoId", p);
-            return Convert.ToInt32(tabela.Rows[0][0]);
-        }
-        public virtual List<T> Listagem()
-        {
+
+        public virtual List<T> Listagem() {
             var p = new SqlParameter[]
             {
                 new SqlParameter("tabela", Tabela),

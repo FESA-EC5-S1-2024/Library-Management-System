@@ -1,20 +1,25 @@
 ﻿using Library_Management_System.Models;
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 
 namespace Library_Management_System.DAO {
     class BookDAO : PadraoDAO<BookViewModel> {
-        protected override SqlParameter[] CriaParametros(BookViewModel book) {
-            SqlParameter[] p = new SqlParameter[8];
-            p[0] = new SqlParameter("BookId", book.Id);
-            p[1] = new SqlParameter("AuthorId", book.AuthorId);
-            p[2] = new SqlParameter("CategoryId", book.CategoryId);
-            p[3] = new SqlParameter("Title", book.Title);
-            p[4] = new SqlParameter("ISBN", book.ISBN);
-            p[5] = new SqlParameter("PublishedYear", book.PublishedYear);
-            p[6] = new SqlParameter("Image", HelperDAO.NullAsDbNull(book.Image));
-            return p;
+        protected override SqlParameter[] CriaParametros(BookViewModel book, bool isInsert = false) {
+            List<SqlParameter> parametros = new List<SqlParameter>();
+
+            if (!isInsert) {
+                parametros.Add(new SqlParameter("@UserId", book.Id));
+            }
+
+            parametros.Add(new SqlParameter ("AuthorId", book.AuthorId));
+            parametros.Add(new SqlParameter("CategoryId", book.CategoryId));
+            parametros.Add(new SqlParameter("Title", book.Title));
+            parametros.Add(new SqlParameter("ISBN", book.ISBN));
+            parametros.Add(new SqlParameter("PublishedYear", book.PublishedYear));
+            parametros.Add(new SqlParameter("Image", HelperDAO.NullAsDbNull(book.Image)));
+            return parametros.ToArray();
         }
 
         protected override BookViewModel MontaModel(DataRow registro) {
@@ -31,7 +36,7 @@ namespace Library_Management_System.DAO {
 
         protected override void SetTabela() {
             Tabela = "Book";
-            NomeSpListagem = "spListagemBook";
+            NomeSpListagem = "spListagem_Book";
         }
     }
 }

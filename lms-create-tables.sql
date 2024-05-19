@@ -71,8 +71,8 @@ CREATE TABLE [dbo].[Loan]
 --3. Criacao das Stored Procedures de Listagem
 ---------------------------------------------------------------------------
 
--- Create spListagemUser
-CREATE OR ALTER PROCEDURE [dbo].[spListagemUser](
+-- Create spListagem_User
+CREATE OR ALTER PROCEDURE [dbo].[spListagem_User](
    @tabela varchar(max),
    @ordem varchar(max)
 )
@@ -82,8 +82,8 @@ BEGIN
     ORDER BY CASE WHEN @ordem IS NULL THEN UserId ELSE @ordem END;
 END
 
--- Create spListagemAuthor
-CREATE OR ALTER PROCEDURE [dbo].[spListagemAuthor](
+-- Create spListagem_Author
+CREATE OR ALTER PROCEDURE [dbo].[spListagem_Author](
    @tabela varchar(max),
    @ordem varchar(max)
 )
@@ -93,8 +93,8 @@ BEGIN
     ORDER BY CASE WHEN @ordem IS NULL THEN AuthorId ELSE @ordem END;
 END
 
--- Create spListagemCategory
-CREATE OR ALTER PROCEDURE [dbo].[spListagemCategory](
+-- Create spListagem_Category
+CREATE OR ALTER PROCEDURE [dbo].[spListagem_Category](
    @tabela varchar(max),
    @ordem varchar(max)
 )
@@ -104,8 +104,8 @@ BEGIN
     ORDER BY CASE WHEN @ordem IS NULL THEN CategoryId ELSE @ordem END;
 END
 
--- Create spListagemBook
-CREATE OR ALTER PROCEDURE [dbo].[spListagemBook](
+-- Create spListagem_Book
+CREATE OR ALTER PROCEDURE [dbo].[spListagem_Book](
    @tabela varchar(max),
    @ordem varchar(max)
 )
@@ -118,8 +118,8 @@ BEGIN
     ORDER BY CASE WHEN @ordem IS NULL THEN BookId ELSE @ordem END;
 END
 
--- Create spListagemLoan
-CREATE OR ALTER PROCEDURE [dbo].[spListagemLoan](
+-- Create spListagem_Loan
+CREATE OR ALTER PROCEDURE [dbo].[spListagem_Loan](
    @tabela varchar(max),
    @ordem varchar(max)
 )
@@ -149,7 +149,7 @@ BEGIN
     SET @primaryKey = @tabela + 'Id';
 
     -- Constr�i a query dinamicamente
-    SET @sql = 'DELETE FROM ' + @tabela + ' WHERE ' + @primaryKey + ' = @id';
+    SET @sql = 'DELETE FROM [' + @tabela + '] WHERE ' + @primaryKey + ' = @id';
 
     -- Executa a query dinamica com o parametro @id
     EXEC sp_executesql @sql, N'@id INT', @id;
@@ -168,28 +168,10 @@ BEGIN
     SET @primaryKey = @tabela + 'Id';
 
     -- Constroi a query dinamicamente
-    SET @sql = 'SELECT * FROM ' + @tabela + ' WHERE ' + @primaryKey + ' = @id';
+    SET @sql = 'SELECT * FROM [' + @tabela + '] WHERE ' + @primaryKey + ' = @id';
 
     -- Executa a query dinamica com o parametro @id
     EXEC sp_executesql @sql, N'@id INT', @id;
-END
-
--- Create spProximoId
-CREATE OR ALTER PROCEDURE [dbo].[spProximoId]
-    @tabela NVARCHAR(50)
-AS
-BEGIN
-    DECLARE @sql NVARCHAR(MAX);
-    DECLARE @primaryKey NVARCHAR(MAX);
-
-    -- Assume que a coluna de chave primaria segue o padrao <NomeDaTabela>Id
-    SET @primaryKey = @tabela + 'Id';
-
-    -- Constr�i a query dinamicamente
-    SET @sql = 'SELECT ISNULL(MAX(' + @primaryKey + '), 0) + 1 AS ProximoId FROM ' + @tabela;
-
-    -- Executa a query dinamica
-    EXEC sp_executesql @sql;
 END
 
 ---------------------------------------------------------------------------
@@ -207,8 +189,6 @@ AS
 BEGIN
     INSERT INTO [dbo].[User] (TypeId, Name, Email, RegistrationDate, Password)
     VALUES (@TypeId, @Name, @Email, @RegistrationDate, @Password);
-
-    SELECT SCOPE_IDENTITY() AS [UserId]; -- retorna o ID do registro inserido
 END
 
 -- Create spUpdate_User
@@ -230,6 +210,7 @@ BEGIN
     WHERE UserId = @UserId;
 END
 
+
 ---------------------------------------------------------------------------
 --6. Criacao das Stored Procedures de CRUD da tabela Author
 ---------------------------------------------------------------------------
@@ -243,8 +224,6 @@ AS
 BEGIN
     INSERT INTO [dbo].[Author] (Name, Country, Birthdate)
     VALUES (@Name, @Country, @Birthdate);
-
-    SELECT SCOPE_IDENTITY() AS [AuthorId]; -- retorna o ID do registro inserido
 END
 
 -- Create spUpdate_Author
@@ -273,8 +252,6 @@ AS
 BEGIN
     INSERT INTO [dbo].[Category] (Description)
     VALUES (@Description);
-
-    SELECT SCOPE_IDENTITY() AS [CategoryId]; -- retorna o ID do registro inserido
 END
 
 -- Create spUpdate_Category
@@ -304,8 +281,6 @@ AS
 BEGIN
     INSERT INTO [dbo].[Book] (AuthorId, CategoryId, Title, ISBN, PublishedYear, Image)
     VALUES (@AuthorId, @CategoryId, @Title, @ISBN, @PublishedYear, @Image);
-
-    SELECT SCOPE_IDENTITY() AS [BookId]; -- retorna o ID do registro inserido
 END
 
 -- Create spUpdate_Book
@@ -344,8 +319,6 @@ AS
 BEGIN
     INSERT INTO [dbo].[Loan] (UserId, BookId, LoanDate, DueDate, ReturnDate)
     VALUES (@UserId, @BookId, @LoanDate, @DueDate, @ReturnDate);
-
-    SELECT SCOPE_IDENTITY() AS [LoanId]; -- retorna o ID do registro inserido
 END
 
 -- Create spUpdate_Loan

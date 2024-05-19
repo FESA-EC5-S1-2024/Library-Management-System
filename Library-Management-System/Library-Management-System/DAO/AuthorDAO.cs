@@ -1,17 +1,22 @@
 ﻿using Library_Management_System.Models;
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 
 namespace Library_Management_System.DAO {
     class AuthorDAO : PadraoDAO<AuthorViewModel> {
-        protected override SqlParameter[] CriaParametros(AuthorViewModel author) {
-            SqlParameter[] p = new SqlParameter[4];
-            p[0] = new SqlParameter("AuthorId", author.Id);
-            p[1] = new SqlParameter("Name", author.Name);
-            p[2] = new SqlParameter("Country", author.Country);
-            p[3] = new SqlParameter("Birthdate", author.Birthdate);
-            return p;
+        protected override SqlParameter[] CriaParametros(AuthorViewModel author, bool isInsert = false) {
+            List<SqlParameter> parametros = new List<SqlParameter>();
+
+            if (!isInsert) {
+                parametros.Add(new SqlParameter("@UserId", author.Id));
+            }
+
+            parametros.Add(new SqlParameter("Name", author.Name));
+            parametros.Add(new SqlParameter("Country", author.Country));
+            parametros.Add(new SqlParameter("Birthdate", author.Birthdate));
+            return parametros.ToArray();
         }
 
         protected override AuthorViewModel MontaModel(DataRow registro) {
@@ -25,7 +30,7 @@ namespace Library_Management_System.DAO {
 
         protected override void SetTabela() {
             Tabela = "Author";
-            NomeSpListagem = "spListagemAuthor";
+            NomeSpListagem = "spListagem_Author";
         }
     }
 }
