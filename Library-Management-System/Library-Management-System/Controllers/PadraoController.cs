@@ -18,17 +18,14 @@ namespace Library_Management_System.Controllers
         protected virtual void PreencheDadosParaView(string Operacao, T model) { }
 
         public virtual IActionResult Index() {
-            if (HelperController.VerificaAdmin(HttpContext.Session)) {
-                try {
-                    var lista = DAO.Listagem();
-                    return View(NomeViewIndex, lista);
-                }
-                catch (Exception erro) {
-                    return View("Error", new ErrorViewModel(erro.ToString()));
-                }
+            try
+            {
+                var lista = DAO.Listagem();
+                return View(NomeViewIndex, lista);
             }
-            else {
-                return RedirectToAction("Index", "Home");
+            catch (Exception erro)
+            {
+                return View("Error", new ErrorViewModel(erro.ToString()));
             }
         }
 
