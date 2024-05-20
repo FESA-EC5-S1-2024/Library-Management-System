@@ -1,0 +1,35 @@
+﻿@model UserViewModel
+@{ Layout = "~/Views/Shared/_Layout.cshtml"; }
+<h2>User Registration</h2>
+
+<form action="Save" method="post" class="col-md-6">
+    <input type="hidden" name="Operacao" value="@ViewBag.Operacao" />
+
+    @Html.HiddenFor(model => model.Id)
+    @Html.HiddenFor(model => model.RegistrationDate)
+
+    <label for="Name" class="control-label">Nome</label>
+    <input asp-for="Name" class="form-control" />
+    <span asp-validation-for="Name" class="text-danger"></span>
+    <br />
+
+    <label for="Email" class="control-label">Email</label>
+    <input asp-for="Email" class="form-control" />
+    <span asp-validation-for="Email" class="text-danger"></span>
+    <br />
+
+    <label for="Password" class="control-label">Password</label>
+    <input asp-for="Password" class="form-control" />
+    <span asp-validation-for="Password" class="text-danger"></span>
+    <br />
+
+    @{ if (Context.Session.GetString("Admin") == "true") {
+<label for="TypeId" class="control-label">TypeId</label>
+                <input asp-for="TypeId" class="form-control" />
+                                <span asp-validation-for="TypeId" class="text-danger"></span>
+                                                <br /> } }
+
+    <br />
+    <input type="submit" value="Save" class="btn btn-info" />
+    <br />
+</form>

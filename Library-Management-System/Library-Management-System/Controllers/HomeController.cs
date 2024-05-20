@@ -20,7 +20,6 @@ namespace Library_Management_System.Controllers
 
         public IActionResult Index()
         {
-            ViewBag.Logado = HelperController.VerificaUserLogado(HttpContext.Session);
             return View();
         }
 

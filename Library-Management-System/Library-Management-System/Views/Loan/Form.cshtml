@@ -1,0 +1,36 @@
+﻿@model LoanViewModel
+@{ Layout = "~/Views/Shared/_Layout.cshtml"; }
+<h2>Loan Registration</h2>
+
+<form action="Save" method="post" class="col-md-6">
+    <input type="hidden" name="Operacao" value="@ViewBag.Operacao" />
+
+    <label for="UserId" class="control-label">Usuário</label>
+    <select asp-for="UserId" asp-items="ViewBag.Usuarios" class="form-control"> </select>
+    <span asp-validation-for="UserId" class="text-danger"></span>
+    <br />
+
+    <label for="BookId" class="control-label">Livro</label>
+    <select asp-for="BookId" asp-items="ViewBag.Livros" class="form-control"> </select>
+    <span asp-validation-for="BookId" class="text-danger"></span>
+    <br />
+
+    <label for="LoanDate" class="control-label">Data de empréstimo</label>
+    <input asp-for="LoanDate" class="form-control" />
+    <span asp-validation-for="LoanDate" class="text-danger"></span>
+    <br />
+
+    <label for="DueDate" class="control-label">Data de vencimento</label>
+    <input asp-for="DueDate" class="form-control" />
+    <span asp-validation-for="DueDate" class="text-danger"></span>
+    <br />
+
+    <label for="ReturnDate" class="control-label">Data de retorno</label>
+    <input asp-for="ReturnDate" class="form-control" />
+    <span asp-validation-for="ReturnDate" class="text-danger"></span>
+    <br />
+
+    <br />
+    <input type="submit" value="Save" class="btn btn-info" />
+    <br />
+</form>
