@@ -18,14 +18,21 @@ namespace Library_Management_System.Controllers
         protected virtual void PreencheDadosParaView(string Operacao, T model) { }
 
         public virtual IActionResult Index() {
-            try
+            if (HelperController.VerificaUserLogado(HttpContext.Session))
             {
-                var lista = DAO.Listagem();
-                return View(NomeViewIndex, lista);
+                try
+                {
+                    var lista = DAO.Listagem();
+                    return View(NomeViewIndex, lista);
+                }
+                catch (Exception erro)
+                {
+                    return View("Error", new ErrorViewModel(erro.ToString()));
+                }
             }
-            catch (Exception erro)
+            else
             {
-                return View("Error", new ErrorViewModel(erro.ToString()));
+                return new RedirectToActionResult("AcessoNegado", "Error", null);
             }
         }
 
