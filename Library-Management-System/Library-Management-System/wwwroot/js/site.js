@@ -1,6 +1,22 @@
 ﻿function deleteRecord(table, id) {
-    if (confirm('Confirma a exclusão do registro?'))
-        location.href = table + '/Delete?id=' + id;
+    swal({
+        title: "Confirma a exclusão do registro?",
+        text: "Se você excluir, não será possível recuperar este registro!",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonClass: "btn-danger",
+        confirmButtonText: "Sim, exclua!",
+        cancelButtonText: "Cancelar",
+        closeOnConfirm: false,
+        closeOnCancel: false
+    },
+    function(isConfirm){
+        if (isConfirm) {
+            location.href = table + '/Delete?id=' + id;
+        } else {
+            swal("Cancelado", "Seu registro está seguro :)", "error");
+        }
+    });
 }
 
 function displayImage() {

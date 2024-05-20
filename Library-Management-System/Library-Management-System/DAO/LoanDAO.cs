@@ -29,6 +29,12 @@ namespace Library_Management_System.DAO {
             l.LoanDate = Convert.ToDateTime(registro["LoanDate"]);
             l.DueDate = Convert.ToDateTime(registro["DueDate"]);
             l.ReturnDate = registro["ReturnDate"] == DBNull.Value ? (DateTime?)null : Convert.ToDateTime(registro["ReturnDate"]);
+
+            if (registro.Table.Columns.Contains("UserName"))
+                l.UserName = registro["UserName"].ToString();
+            if (registro.Table.Columns.Contains("BookTitle"))
+                l.BookTitle = registro["BookTitle"].ToString();
+            
             return l;
         }
 

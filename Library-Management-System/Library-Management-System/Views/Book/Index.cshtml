@@ -2,12 +2,22 @@
 
 <h2>Books</h2>
 
-<a href="/book/Create" class="btn btn-success">Register Book</a>
+@{ 
+    if (Context.Session.GetString("Admin") == "true") 
+    {
+        <a href="/book/Create" class="btn btn-success">Register Book</a>
+    }
+}
 <br />
 <br />
 <table class="table table-striped table-responsive">
     <tr>
-        <th>Actions</th>
+        @{ 
+            if (Context.Session.GetString("Admin") == "true") 
+            {
+                <th>Actions</th>
+            } 
+        }
         <th>Title</th>
         <th>Author Name</th>
         <th>Category</th>
@@ -18,10 +28,15 @@
     @foreach (BookViewModel book in Model)
     {
         <tr>
-            <td>
-                <a href="/book/edit?id=@book.Id">✏️</a>
-                <a href="javascript:deleteRecord('book', @book.Id)">❎</a>
-            </td>
+            @{ 
+                if (Context.Session.GetString("Admin") == "true") 
+                {
+                    <td>
+                        <a href="/book/edit?id=@book.Id">✏️</a>
+                        <a href="javascript:deleteRecord('book', @book.Id)">❎</a>
+                    </td>
+                }
+            }
             <td>@book.Title</td>
             <td>@book.AuthorName</td>
             <td>@book.CategoryDescription</td>

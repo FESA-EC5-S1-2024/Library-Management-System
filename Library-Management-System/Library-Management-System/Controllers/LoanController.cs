@@ -3,131 +3,76 @@ using Library_Management_System.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Transactions;
 using System;
+using System.Collections.Generic;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Library_Management_System.Controllers
 {
-    public class LoanController : Controller
-    {
-        private readonly LoanDAO _loanDAO;
-        private readonly UserDAO _userDAO;
-        private readonly BookDAO _bookDAO;
+    public class LoanController : PadraoController<LoanViewModel> {
+        private readonly UserDAO UserDAO;
+        private readonly BookDAO BookDAO;
 
         public LoanController()
         {
-            _loanDAO = new LoanDAO();
-            _userDAO = new UserDAO();
-            _bookDAO = new BookDAO();
+            DAO = new LoanDAO();
+            UserDAO = new UserDAO();
+            BookDAO = new BookDAO();
+            ExigeAdmin = false;
+        }
+        protected override void ValidaDados(LoanViewModel model, string operacao) {
+            base.ValidaDados(model, operacao);
+
+            if (model.UserId <= 0)
+                ModelState.AddModelError("UserId", "Adicione um Usuário.");
+
+            if (model.BookId <= 0)
+                ModelState.AddModelError("BookId", "Adicione um Livro.");
+
+            if (model.LoanDate > DateTime.Now)
+                ModelState.AddModelError("LoanDate", "Data de empréstimo inválida!");
+
+            if (model.DueDate < model.LoanDate)
+                ModelState.AddModelError("DueDate", "Data de vencimento inválida!");
         }
 
-        public IActionResult Index()
-        {
-            var loans = _loanDAO.Listagem();
-            return View(loans);
-        }
-
-        public IActionResult Details(int id)
-        {
-            var loan = _loanDAO.Consulta(id);
-            if (loan == null)
-            {
-                return NotFound();
+        protected override void PreencheDadosParaView(string Operacao, LoanViewModel model) {
+            base.PreencheDadosParaView(Operacao, model);
+            if (Operacao == "I") {
+                model.LoanDate = DateTime.Now;
+                model.DueDate = model.LoanDate.AddDays(7);
             }
-            return View(loan);
-        }
-
-        public IActionResult Create()
-        {
-            ViewBag.Users = _userDAO.Listagem();
-            ViewBag.Books = _bookDAO.Listagem();
-            return View();
-        }
-
-        [HttpPost]
-        public IActionResult Create(LoanViewModel loan)
-        {
-            if (ModelState.IsValid)
-            {
-                using (var transaction = new TransactionScope())
-                {
-                    try
-                    {
-                        _loanDAO.Insert(loan);
-                        transaction.Complete();
-                        return RedirectToAction(nameof(Index));
-                    }
-                    catch (Exception e)
-                    {
-                        return View("Error", new ErrorViewModel(e.Message));
-                    }
-                }
+            else if (Operacao == "A") {
+                model.ReturnDate = DateTime.Now;
             }
-            ViewBag.Users = _userDAO.Listagem(); // Recarregar em caso de erro
-            ViewBag.Books = _bookDAO.Listagem(); // Recarregar em caso de erro
-            return View(loan);
+
+            PreparaListaUsuariosParaCombo();
+            PreparaListaLivrosParaCombo();
         }
 
-        public IActionResult Edit(int id)
-        {
-            var loan = _loanDAO.Consulta(id);
-            if (loan == null)
+        private void PreparaListaUsuariosParaCombo() {
+            var usuarios = UserDAO.Listagem();
+            List<SelectListItem> listaUsuarios = new List<SelectListItem>
             {
-                return NotFound();
+                new SelectListItem("Selecione um usuário...", "0")
+            };
+            foreach (var usuario in usuarios) {
+                SelectListItem item = new SelectListItem(usuario.Name, usuario.Id.ToString());
+                listaUsuarios.Add(item);
             }
-            ViewBag.Users = _userDAO.Listagem();
-            ViewBag.Books = _bookDAO.Listagem();
-            return View(loan);
+            ViewBag.Usuarios = listaUsuarios;
         }
 
-        [HttpPost]
-        public IActionResult Edit(LoanViewModel loan)
-        {
-            if (ModelState.IsValid)
+        private void PreparaListaLivrosParaCombo() {
+            var livros = BookDAO.Listagem();
+            List<SelectListItem> listaLivros = new List<SelectListItem>
             {
-                using (var transaction = new TransactionScope())
-                {
-                    try
-                    {
-                        _loanDAO.Update(loan);
-                        transaction.Complete();
-                        return RedirectToAction(nameof(Index));
-                    }
-                    catch (Exception e)
-                    {
-                        return View("Error", new ErrorViewModel(e.Message));
-                    }
-                }
+                new SelectListItem("Selecione um livros...", "0")
+            };
+            foreach (var livro in livros) {
+                SelectListItem item = new SelectListItem(livro.Title, livro.Id.ToString());
+                listaLivros.Add(item);
             }
-            ViewBag.Users = _userDAO.Listagem(); // Recarregar em caso de erro
-            ViewBag.Books = _bookDAO.Listagem(); // Recarregar em caso de erro
-            return View(loan);
-        }
-
-        public IActionResult Delete(int id)
-        {
-            var loan = _loanDAO.Consulta(id);
-            if (loan == null)
-            {
-                return NotFound();
-            }
-            return View(loan);
-        }
-
-        [HttpPost, ActionName("Delete")]
-        public IActionResult DeleteConfirmed(int id)
-        {
-            using (var transaction = new TransactionScope())
-            {
-                try
-                {
-                    _loanDAO.Delete(id);
-                    transaction.Complete();
-                    return RedirectToAction(nameof(Index));
-                }
-                catch (Exception e)
-                {
-                    return View("Error", new ErrorViewModel(e.Message));
-                }
-            }
+            ViewBag.Livros = listaLivros;
         }
     }
 }

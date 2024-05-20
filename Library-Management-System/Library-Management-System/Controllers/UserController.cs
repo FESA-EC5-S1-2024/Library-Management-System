@@ -1,86 +1,34 @@
 ﻿using Library_Management_System.DAO;
 using Library_Management_System.Models;
 using Microsoft.AspNetCore.Mvc;
+using System;
 
 namespace Library_Management_System.Controllers
 {
-    public class UserController : Controller
-    {
-        private readonly UserDAO _userDAO;
-
+    public class UserController : PadraoController<UserViewModel> {
         public UserController()
         {
-            _userDAO = new UserDAO();
+            DAO = new UserDAO();
+            NovoUsuario = true;
         }
 
-        public IActionResult Index()
-        {
-            var users = _userDAO.Listagem();
-            return View(users);
+        protected override void ValidaDados(UserViewModel model, string operacao) {
+            base.ValidaDados(model, operacao);
+
+            if (string.IsNullOrEmpty(model.Name))
+                ModelState.AddModelError("Name", "Preencha o nome.");
+
+            if (string.IsNullOrEmpty(model.Email))
+                ModelState.AddModelError("Email", "Preencha o Email.");
+
+            if (string.IsNullOrEmpty(model.Password))
+                ModelState.AddModelError("Password", "Adicione uma senha.");
         }
 
-        public IActionResult Details(int id)
-        {
-            var user = _userDAO.Consulta(id);
-            if (user == null)
-            {
-                return NotFound();
+        protected override void PreencheDadosParaView(string Operacao, UserViewModel model) { 
+            if(Operacao == "I") {
+                model.RegistrationDate = DateTime.Now;
             }
-            return View(user);
-        }
-
-        public IActionResult Create()
-        {
-            return View();
-        }
-
-        [HttpPost]
-        public IActionResult Create(UserViewModel user)
-        {
-            if (ModelState.IsValid)
-            {
-                _userDAO.Insert(user);
-                return RedirectToAction(nameof(Index));
-            }
-            return View(user);
-        }
-
-        public IActionResult Edit(int id)
-        {
-            var user = _userDAO.Consulta(id);
-            if (user == null)
-            {
-                return NotFound();
-            }
-            return View(user);
-        }
-
-        [HttpPost]
-        public IActionResult Edit(UserViewModel user)
-        {
-            if (ModelState.IsValid)
-            {
-                _userDAO.Update(user);
-                return RedirectToAction(nameof(Index));
-            }
-            return View(user);
-        }
-
-        public IActionResult Delete(int id)
-        {
-            var user = _userDAO.Consulta(id);
-            if (user == null)
-            {
-                return NotFound();
-            }
-            return View(user);
-        }
-
-        [HttpPost, ActionName("Delete")]
-        public IActionResult DeleteConfirmed(int id)
-        {
-            _userDAO.Delete(id);
-            return RedirectToAction(nameof(Index));
         }
     }
 }

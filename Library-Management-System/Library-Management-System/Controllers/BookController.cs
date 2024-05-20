@@ -20,6 +20,7 @@ namespace Library_Management_System.Controllers
             DAO = new BookDAO();
             AuthorDAO = new AuthorDAO();
             CategoryDAO = new CategoryDAO();
+            ExigeAdmin = false;
         }
 
         protected override void ValidaDados(BookViewModel model, string operacao)

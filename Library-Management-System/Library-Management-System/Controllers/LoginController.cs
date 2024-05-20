@@ -20,9 +20,10 @@ namespace Library_Management_System.Controllers
             var usuario = DAO.ConsultaUsuario(email);
             if (usuario != null && usuario.Password == senha)
             {
-                HttpContext.Session.SetString("Admin", usuario.TypeId.ToString());
                 HttpContext.Session.SetString("Logado", "true");
-                return RedirectToAction("index", "Home");
+                HttpContext.Session.SetString("Admin", usuario.TypeId == 1 ? "true" : "false");
+
+                return RedirectToAction("Index", "Home");
             }
             else
             {
@@ -30,6 +31,7 @@ namespace Library_Management_System.Controllers
                 return View("Index");
             }
         }
+
         public IActionResult LogOff()
         {
             HttpContext.Session.Clear();
