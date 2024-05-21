@@ -6,6 +6,7 @@
 
 <form action="Save" method="post" class="col-md-6">
     <input type="hidden" name="Operacao" value="@ViewBag.Operacao" />
+    <input asp-for="Id" class="form-control" hidden />
 
     <label for="Name" class="control-label">Name</label>
     <input asp-for="Name" class="form-control" />

@@ -13,16 +13,15 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var author in Model)
+            @foreach (AuthorViewModel author in Model)
             {
                 <tr>
                     <td>@author.Name</td>
                     <td>@author.Country</td>
                     <td>@author.Birthdate.ToString("yyyy-MM-dd")</td>
                     <td>
-                        <a href="@Url.Action("Edit", new { id = author.Id })" class="btn btn-primary">Edit</a>
-                        <a href="@Url.Action("Details", new { id = author.Id })" class="btn btn-info">View</a>
-                        <a href="@Url.Action("Delete", new { id = author.Id })" class="btn btn-danger">Delete</a>
+                        <a href="/author/edit?id=@author.Id" class="btn btn-primary">Edit</a>
+                        <a href="javascript:deleteRecord('author', @author.Id)" class="btn btn-danger"> Delete</a>
                     </td>
                 </tr>
             }
