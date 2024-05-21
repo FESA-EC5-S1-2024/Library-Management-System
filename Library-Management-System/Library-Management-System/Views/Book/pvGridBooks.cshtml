@@ -1,0 +1,25 @@
+﻿@model List<BookViewModel>
+<table class="table table-striped">
+    <tr>
+        <th>Código</th>
+        <th>Título</th>
+        <th>Autor</th>
+        <th>Categoria</th>
+        <th>Ano de publicação</th>
+        <th>Foto</th>
+    </tr>
+    @foreach (var book in Model)
+    {
+        <tr>
+            <td>@book.Id</td>
+            <td>@book.Title</td>
+            <td>@book.AuthorId - @book.AuthorName</td>
+            <td>@book.CategoryId - @book.CategoryDescription</td>
+            <td>@book.PublishedYear</td>
+            <td>
+                <img id="imgPreview" src="data:image/jpeg;base64,@book.ImageBase64" class="img-responsive"
+                     width="50">
+            </td>
+        </tr>
+    }
+</table>
