@@ -5,6 +5,7 @@ using System.Transactions;
 using System;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Http;
 
 namespace Library_Management_System.Controllers
 {
@@ -73,6 +74,28 @@ namespace Library_Management_System.Controllers
                 listaLivros.Add(item);
             }
             ViewBag.Livros = listaLivros;
+        }
+
+        public override IActionResult Index()
+        {
+            if (!HelperController.VerificaAdmin(HttpContext.Session))
+            {
+                try
+                {
+                    string userId = HttpContext.Session.GetString("UserId");
+                    LoanDAO loandao = new LoanDAO();
+                    var lista = loandao.ConsultaEmprestimos(userId);
+                    return View(NomeViewIndex, lista);
+                }
+                catch (Exception erro)
+                {
+                    return View("Error", new ErrorViewModel(erro.ToString()));
+                }
+            }
+            else
+            {
+                return base.Index();
+            }
         }
     }
 }
