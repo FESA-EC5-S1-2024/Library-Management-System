@@ -15,8 +15,8 @@
     {
         <tr>
             <td>
-                <a href="/category/edit?id=@category.Id">✏️</a>
-                <a href="javascript:deleteRecord('category', @category.Id)">❎</a>
+                <a href="/category/edit?id=@category.Id" class="btn btn-primary">Edit</a>
+                <a href="javascript:deleteRecord('category', @category.Id)" class="btn btn-danger"> Delete</a>
             </td>
             <td>@category.Description</td>
         </tr>
