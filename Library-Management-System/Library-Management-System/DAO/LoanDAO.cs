@@ -1,4 +1,6 @@
-﻿using Library_Management_System.Models;
+﻿using Library_Management_System.Controllers;
+using Library_Management_System.Models;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -41,6 +43,20 @@ namespace Library_Management_System.DAO {
         protected override void SetTabela() {
             Tabela = "Loan";
             NomeSpListagem = "spListagem_Loan";
+        }
+
+        public List<LoanViewModel> ConsultaEmprestimos(string userId)
+        {
+            var p = new SqlParameter[]
+            {
+                new SqlParameter("UserId", Convert.ToInt32(userId))
+            };
+            var tabela = HelperDAO.ExecutaProcSelect("spConsulta_Loan", p);
+            List<LoanViewModel> lista = new List<LoanViewModel>();
+            foreach (DataRow registro in tabela.Rows)
+                lista.Add(MontaModel(registro));
+
+            return lista;
         }
     }
 }

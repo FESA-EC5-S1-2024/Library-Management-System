@@ -22,6 +22,7 @@ namespace Library_Management_System.Controllers
             {
                 HttpContext.Session.SetString("Logado", "true");
                 HttpContext.Session.SetString("Admin", usuario.TypeId == 1 ? "true" : "false");
+                HttpContext.Session.SetString("UserId", usuario.Id.ToString());
 
                 return RedirectToAction("Index", "Home");
             }
