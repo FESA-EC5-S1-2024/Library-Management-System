@@ -55,7 +55,8 @@ namespace Library_Management_System.Controllers
 
         public virtual IActionResult Save(T model, string Operacao)
         {
-            if (HelperController.VerificaAdmin(HttpContext.Session) || NovoUsuario) {
+            bool Admin = HelperController.VerificaAdmin(HttpContext.Session);
+            if (Admin || NovoUsuario) {
                 try {
                     ValidaDados(model, Operacao);
                     if (ModelState.IsValid == false) {
@@ -69,7 +70,7 @@ namespace Library_Management_System.Controllers
                         else
                             DAO.Update(model);
 
-                        if (NovoUsuario) {
+                        if (NovoUsuario && !Admin) {
                             return RedirectToAction("Index", "Login");
                         }
                         else {
