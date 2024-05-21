@@ -26,3 +26,24 @@ function displayImage() {
         document.getElementById("imgPreview").src = oFREvent.target.result;
     };
 }
+
+function aplicaFiltroConsultaAvancada() {
+    var vDescricao = document.getElementById('title').value;
+    var vAutor = document.getElementById('authorName').value;
+    var vCategoria = document.getElementById('categoryDescription').value;
+    var vDataInicial = document.getElementById('dataInicial').value;
+    var vDataFinal = document.getElementById('dataFinal').value;
+    $.ajax({
+        url: "/book/ObtemDadosConsultaAvancada",
+        data: { descricao: vDescricao, autor: vAutor, categoria: vCategoria, dataInicial: vDataInicial, dataFinal: vDataFinal },
+        success: function (dados) {
+            if (dados.erro != undefined) {
+                alert(dados.msg);
+            }
+            else {
+                document.getElementById('resultadoConsulta').innerHTML = dados;
+            }
+        },
+    });
+
+}

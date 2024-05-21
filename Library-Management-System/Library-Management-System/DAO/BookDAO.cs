@@ -47,5 +47,22 @@ namespace Library_Management_System.DAO {
             Tabela = "Book";
             NomeSpListagem = "spListagem_Book";
         }
+
+        public List<BookViewModel> ConsultaAvancada(string descricao, int autor, int categoria, int dataInicial, int dataFinal)
+        {
+            SqlParameter[] p = {
+             new SqlParameter("descricao", descricao),
+             new SqlParameter("autor", autor),
+             new SqlParameter("categoria", categoria),
+             new SqlParameter("dataInicial", dataInicial),
+             new SqlParameter("dataFinal", dataFinal),
+             };
+            var tabela = HelperDAO.ExecutaProcSelect("spConsultaAvancada_Book", p);
+            var lista = new List<BookViewModel>();
+            foreach (DataRow dr in tabela.Rows)
+                lista.Add(MontaModel(dr));
+            return lista;
+        }
+
     }
 }

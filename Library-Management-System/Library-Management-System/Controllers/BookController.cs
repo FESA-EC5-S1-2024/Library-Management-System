@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Http;
 using System.IO;
+using System.Data.SqlTypes;
 
 namespace Library_Management_System.Controllers
 {
@@ -109,5 +110,42 @@ namespace Library_Management_System.Controllers
             }
             ViewBag.Categorias = listaCategorias;
         }
+
+        public IActionResult ExibeConsultaAvancada()
+        {
+            try
+            {
+                PreparaListaAutoresParaCombo();
+                ViewBag.Autores[0] = new SelectListItem("TODAS", "0");
+                PreparaListaCategoriasParaCombo();
+                ViewBag.Categorias[0] = new SelectListItem("TODAS", "0");
+                return View("ConsultaAvancada");
+            }
+            catch (Exception erro)
+            {
+                return View("Error", new ErrorViewModel(erro.Message));
+            }
+        }
+
+        public IActionResult ObtemDadosConsultaAvancada(string descricao, int autor, int categoria, int dataInicial, int dataFinal)
+        {
+            try
+            {
+                BookDAO bookdao = new BookDAO();
+                if (string.IsNullOrEmpty(descricao))
+                    descricao = "";
+                if (dataInicial == 0)
+                    dataInicial = SqlDateTime.MinValue.Value.Year;
+                if (dataFinal == 0)
+                    dataFinal = SqlDateTime.MaxValue.Value.Year;
+                var lista = bookdao.ConsultaAvancada(descricao, autor, categoria, dataInicial, dataFinal);
+                return PartialView("pvGridBooks", lista);
+            }
+            catch (Exception erro)
+            {
+                return Json(new { erro = true, msg = erro.Message });
+            }
+        }
+
     }
 }

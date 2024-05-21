@@ -311,6 +311,36 @@ BEGIN
     WHERE BookId = @BookId;
 END
 
+-- Create spConsultaAvancada_Book
+CREATE OR ALTER PROCEDURE [dbo].[spConsultaAvancada_Book]
+    @descricao VARCHAR(MAX),
+    @autor INT,
+    @categoria INT,
+    @dataInicial INT,
+    @dataFinal INT
+AS
+BEGIN
+    DECLARE @categIni INT
+    DECLARE @categFim INT
+    DECLARE @autorIni INT
+    DECLARE @autorFim INT
+    SET @categIni = CASE @categoria WHEN 0 THEN 0 ELSE @categoria END
+    SET @categFim = CASE @categoria WHEN 0 THEN 999999 ELSE @categoria END
+    SET @autorIni = CASE @autor WHEN 0 THEN 0 ELSE @autor END
+    SET @autorFim = CASE @autor WHEN 0 THEN 999999 ELSE @autor END
+
+    SELECT 
+        Book.*, Category.Description AS 'CategoryDescription', Author.Name AS 'AuthorName'
+    FROM Book
+    INNER JOIN Category ON Book.categoryId = Category.CategoryId
+    INNER JOIN Author ON Book.authorId = Author.AuthorId
+    WHERE 
+        Book.title LIKE '%' + @descricao + '%' AND
+        Book.publishedYear BETWEEN @dataInicial AND @dataFinal AND
+        Book.CategoryId BETWEEN @categIni AND @categFim AND
+        Book.AuthorId BETWEEN @autorIni AND @autorFim;
+END
+
 ---------------------------------------------------------------------------
 --9. Criacao das Stored Procedures de CRUD da tabela Loan
 ---------------------------------------------------------------------------
