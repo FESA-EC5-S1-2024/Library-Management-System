@@ -10,7 +10,7 @@ namespace Library_Management_System.DAO {
             List<SqlParameter> parametros = new List<SqlParameter>();
 
             if (!isInsert) {
-                parametros.Add(new SqlParameter("@UserId", book.Id));
+                parametros.Add(new SqlParameter("BookId", book.Id));
             }
 
             parametros.Add(new SqlParameter ("AuthorId", book.AuthorId));

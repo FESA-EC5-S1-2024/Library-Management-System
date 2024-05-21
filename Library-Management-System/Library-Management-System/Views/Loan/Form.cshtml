@@ -4,6 +4,7 @@
 
 <form action="Save" method="post" class="col-md-6">
     <input type="hidden" name="Operacao" value="@ViewBag.Operacao" />
+    <input asp-for="Id" class="form-control" hidden />
 
     <label for="UserId" class="control-label">Usuário</label>
     <select asp-for="UserId" asp-items="ViewBag.Usuarios" class="form-control"> </select>
