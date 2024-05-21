@@ -376,3 +376,15 @@ BEGIN
         ReturnDate = @ReturnDate
     WHERE LoanId = @LoanId;
 END
+
+-- Create spConsulta_Loan
+CREATE OR ALTER PROCEDURE [dbo].[spConsulta_Loan] 
+    @UserId INT
+AS
+BEGIN
+	SELECT [Loan].*, [User].Name as 'UserName', [Book].Title as 'BookTitle'
+    FROM [Loan]
+    INNER JOIN [User] ON [User].UserId = [Loan].UserId
+    INNER JOIN [Book] ON [Book].BookId = [Loan].BookId
+	WHERE [Loan].UserId = @UserId
+END
