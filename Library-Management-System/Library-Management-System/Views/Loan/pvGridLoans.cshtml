@@ -1,0 +1,29 @@
+﻿@model List<LoanViewModel>
+<table class="table table-striped">
+    <tr>
+        @{if (Context.Session.GetString("Admin") == "true")
+        {
+            <th>Código</th>
+            <th>Usuário</th>
+        }}
+        <th>Título</th>
+        <th>Data de Empréstimo</th>
+        <th>Data de Vencimento</th>
+        <th>Data de Retorno</th>
+    </tr>
+    @foreach (var loan in Model)
+    {
+        <tr>
+            @{if (Context.Session.GetString("Admin") == "true")
+            {
+                <th>@loan.Id</th>
+                <th>@loan.UserName</th>
+            }}
+            <td>@loan.BookTitle</td>
+
+            <td>@loan.LoanDate.ToShortDateString()</td>
+            <td>@loan.DueDate.ToShortDateString()</td>
+            <td>@(loan.ReturnDate.HasValue ? loan.ReturnDate?.ToShortDateString() : "Not Returned")</td>
+        </tr>
+    }
+</table>
