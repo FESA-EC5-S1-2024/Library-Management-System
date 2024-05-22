@@ -67,3 +67,34 @@ function aplicaFiltroConsultaAvancadaEmprestimo() {
         },
     });
 }
+
+$(document).ready(function () {
+    $('.open-modal-btn').on('click', function () {
+        var bookTitle = $(this).closest('tr').find('.book-title').text().trim();
+        $('#modalS .modal-title').text("Sinopse - " + bookTitle);
+        var isbn = $(this).closest('tr').find('.isbn').text().trim();
+        var linkAPI = 'https://www.googleapis.com/books/v1/volumes?q=isbn:' + isbn;
+        $.ajax({
+            url: linkAPI,
+            success: function (data) {
+                var description;
+                if (data.error != undefined || data == null || data.totalItems == 0 || data.items[0]?.volumeInfo?.description == null) {
+                    description = "Sinopse do livro não encontrada.";
+                } else {
+                    description = data.items[0].volumeInfo.description;
+                }
+
+                // Limit the description to a maximum number of characters (e.g., 200 characters)
+                var maxLength = 2000;
+                if (description.length > maxLength) {
+                    description = description.substring(0, maxLength) + '...';
+                }
+
+                $('#modalS .modal-body').text(description);
+            },
+            error: function (xhr, status, error) {
+                $('#modalS .modal-body').text("Erro ao carregar a sinopse.");
+            }
+        });
+    });
+});

@@ -10,7 +10,8 @@
         if (Context.Session.GetString("Admin") == "true")
         {
             <a href="/book/Create" class="bg-gray-700 hover:bg-gray-800 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Registrar Livro</a>
-        } else
+        }
+        else
         {
             <a class="py-5"></a>
         }
@@ -39,7 +40,8 @@
                 @foreach (var book in Model)
                 {
                     <tr class="border-t border-gray-100">
-                        <td class="py-2 px-4 text-left">@book.Title</td>
+                        <td hidden class="isbn">@book.ISBN</td>
+                        <td class="py-2 px-4 text-left book-title">@book.Title</td>
                         <td class="py-2 px-4 text-left">@book.AuthorName</td>
                         <td class="py-2 px-4 text-left">@book.CategoryDescription</td>
                         <td class="py-2 px-4 text-left">@book.PublishedYear</td>
@@ -55,6 +57,9 @@
                                 </td>
                             }
                         }
+                        <td>
+                            <button type="button" class="btn btn-primary open-modal-btn" data-toggle="modal" data-target="#myModal" onclick="openModalS()">ℹ️</button>
+                        </td>
                     </tr>
                 }
             </tbody>
@@ -69,6 +74,19 @@
     </div>
 </div>
 
+<!-- Modal Synopsis -->
+<div id="modalS" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 hidden" onclick="closeModalS(event)">
+    <div class="bg-white p-4 my-12 rounded-lg w-5/6" onclick="event.stopPropagation();">
+        <div class="modal-header p-4 pb-6">
+            <h2 class="modal-title text-xl font-bold text-center" id="exampleModalCenterTitle">Sinopse</h2>
+        </div>
+
+        <div class="modal-body PX-2">
+            <!-- Content will be updated dynamically -->
+        </div>
+    </div>
+</div>
+
 <script>
     function openModal(src) {
         document.getElementById('modal').classList.remove('hidden');
@@ -78,6 +96,15 @@
     function closeModal(event) {
         if (!event || event.target == document.getElementById('modal')) {
             document.getElementById('modal').classList.add('hidden');
+        }
+    }
+    function openModalS() {
+        document.getElementById('modalS').classList.remove('hidden');
+    }
+
+    function closeModalS(event) {
+        if (!event || event.target == document.getElementById('modalS')) {
+            document.getElementById('modalS').classList.add('hidden');
         }
     }
 </script>
