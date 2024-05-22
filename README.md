@@ -1,6 +1,6 @@
-# Sistema de Gerenciamento de Livraria
+# Sistema de Gerenciamento de Biblioteca
 
-Este sistema é projetado para gerenciar as operações de uma livraria, incluindo cadastro de usuários, livros, autores, categorias e empréstimos. Além disso, o sistema oferece funcionalidades para login, consulta avançada e controle de transações.
+Este sistema é projetado para gerenciar as operações de uma biblioteca, incluindo cadastro de usuários, livros, autores, categorias e empréstimos. Além disso, o sistema oferece funcionalidades para login, consulta avançada e controle de transações.
 
 ## Funcionalidades
 
