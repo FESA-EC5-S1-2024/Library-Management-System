@@ -58,5 +58,20 @@ namespace Library_Management_System.DAO {
 
             return lista;
         }
+
+        public List<LoanViewModel> ConsultaAvancada(string usuario, string descricao, DateTime dataInicial, DateTime dataFinal)
+        {
+            SqlParameter[] p = {
+             new SqlParameter("usuario", usuario),
+             new SqlParameter("descricao", descricao),
+             new SqlParameter("dataInicial", dataInicial),
+             new SqlParameter("dataFinal", dataFinal),
+             };
+            var tabela = HelperDAO.ExecutaProcSelect("spConsultaAvancada_Loan", p);
+            var lista = new List<LoanViewModel>();
+            foreach (DataRow dr in tabela.Rows)
+                lista.Add(MontaModel(dr));
+            return lista;
+        }
     }
 }

@@ -27,7 +27,7 @@ function displayImage() {
     };
 }
 
-function aplicaFiltroConsultaAvancada() {
+function aplicaFiltroConsultaAvancadaLivro() {
     var vDescricao = document.getElementById('title').value;
     var vAutor = document.getElementById('authorName').value;
     var vCategoria = document.getElementById('categoryDescription').value;
@@ -45,5 +45,23 @@ function aplicaFiltroConsultaAvancada() {
             }
         },
     });
+}
 
+function aplicaFiltroConsultaAvancadaEmprestimo() {
+    var vUsuario = document.getElementById('userName').value;
+    var vDescricao = document.getElementById('title').value;
+    var vDataInicial = document.getElementById('dataInicial').value;
+    var vDataFinal = document.getElementById('dataFinal').value;
+    $.ajax({
+        url: "/loan/ObtemDadosConsultaAvancada",
+        data: { usuario: vUsuario, descricao: vDescricao, dataInicial: vDataInicial, dataFinal: vDataFinal },
+        success: function (dados) {
+            if (dados.erro != undefined) {
+                alert(dados.msg);
+            }
+            else {
+                document.getElementById('resultadoConsulta').innerHTML = dados;
+            }
+        },
+    });
 }
