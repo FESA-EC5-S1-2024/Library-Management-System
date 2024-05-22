@@ -218,6 +218,32 @@ BEGIN
     SELECT * FROM [User] WHERE Email = @Email
 END
 
+-- Create spDelete_User_And_Loans
+CREATE OR ALTER PROCEDURE [dbo].[spDelete_User_And_Loans]
+    @UserId INT
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    BEGIN TRY
+        BEGIN TRANSACTION;
+
+        -- Deletar empréstimos relacionados ao usuário
+        DELETE FROM Loan
+        WHERE UserId = @UserId;
+
+        -- Deletar o usuário
+        DELETE FROM [User]
+        WHERE UserId = @UserId;
+
+        COMMIT TRANSACTION;
+    END TRY
+    BEGIN CATCH
+        ROLLBACK TRANSACTION;
+        THROW;
+    END CATCH
+END;
+
 ---------------------------------------------------------------------------
 --6. Criacao das Stored Procedures de CRUD da tabela Author
 ---------------------------------------------------------------------------
@@ -248,6 +274,36 @@ BEGIN
     WHERE AuthorId = @AuthorId;
 END
 
+-- Create spDelete_Author_And_Books
+CREATE OR ALTER PROCEDURE [dbo].[spDelete_Author_And_Books]
+    @AuthorId INT
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    BEGIN TRY
+        BEGIN TRANSACTION;
+
+        -- Deletar empréstimos relacionados aos livros do autor
+        DELETE FROM Loan
+        WHERE BookId IN (SELECT BookId FROM Book WHERE AuthorId = @AuthorId);
+
+        -- Deletar livros relacionados ao autor
+        DELETE FROM Book
+        WHERE AuthorId = @AuthorId;
+
+        -- Deletar o autor
+        DELETE FROM Author
+        WHERE AuthorId = @AuthorId;
+
+        COMMIT TRANSACTION;
+    END TRY
+    BEGIN CATCH
+        ROLLBACK TRANSACTION;
+        THROW;
+    END CATCH
+END;
+
 ---------------------------------------------------------------------------
 --7. Criacao das Stored Procedures de CRUD da tabela Category
 ---------------------------------------------------------------------------
@@ -271,6 +327,36 @@ BEGIN
     SET Description = @Description
     WHERE CategoryId = @CategoryId;
 END
+
+-- Create spDelete_Category_And_Books
+CREATE OR ALTER PROCEDURE [dbo].[spDelete_Category_And_Books]
+    @CategoryId INT
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    BEGIN TRY
+        BEGIN TRANSACTION;
+
+        -- Deletar empréstimos relacionados aos livros da categoria
+        DELETE FROM Loan
+        WHERE BookId IN (SELECT BookId FROM Book WHERE CategoryId = @CategoryId);
+
+        -- Deletar livros relacionados à categoria
+        DELETE FROM Book
+        WHERE CategoryId = @CategoryId;
+
+        -- Deletar a categoria
+        DELETE FROM Category
+        WHERE CategoryId = @CategoryId;
+
+        COMMIT TRANSACTION;
+    END TRY
+    BEGIN CATCH
+        ROLLBACK TRANSACTION;
+        THROW;
+    END CATCH
+END;
 
 ---------------------------------------------------------------------------
 --8. Criacao das Stored Procedures de CRUD da tabela Book
@@ -341,6 +427,32 @@ BEGIN
         Book.AuthorId BETWEEN @autorIni AND @autorFim;
 END
 
+-- Create spDelete_Book_And_Loans
+CREATE OR ALTER PROCEDURE [dbo].[spDelete_Book_And_Loans]
+    @BookId INT
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    BEGIN TRY
+        BEGIN TRANSACTION;
+
+        -- Deletar empréstimos relacionados ao livro
+        DELETE FROM Loan
+        WHERE BookId = @BookId;
+
+        -- Deletar o livro
+        DELETE FROM Book
+        WHERE BookId = @BookId;
+
+        COMMIT TRANSACTION;
+    END TRY
+    BEGIN CATCH
+        ROLLBACK TRANSACTION;
+        THROW;
+    END CATCH
+END;
+
 ---------------------------------------------------------------------------
 --9. Criacao das Stored Procedures de CRUD da tabela Loan
 ---------------------------------------------------------------------------
@@ -407,3 +519,11 @@ BEGIN
         [Book].Title LIKE '%' + @descricao + '%' AND
         Book.publishedYear BETWEEN @dataInicial AND @dataFinal;
 END
+
+
+---------------------------------------------------------------------------
+--10. Criacao do sa do sistema
+---------------------------------------------------------------------------
+
+INSERT INTO [dbo].[User] (TypeId, Name, Email, RegistrationDate, Password)
+VALUES (1, 'System Admin', 'sa', GETDATE(), '1234');
