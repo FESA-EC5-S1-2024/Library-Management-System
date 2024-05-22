@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Http;
+using System.Data.SqlTypes;
 
 namespace Library_Management_System.Controllers
 {
@@ -95,6 +96,47 @@ namespace Library_Management_System.Controllers
             else
             {
                 return base.Index();
+            }
+        }
+
+        public IActionResult ExibeConsultaAvancada()
+        {
+            try
+            {
+                return View("ConsultaAvancada");
+            }
+            catch (Exception erro)
+            {
+                return View("Error", new ErrorViewModel(erro.Message));
+            }
+        }
+
+        public IActionResult ObtemDadosConsultaAvancada(string usuario, string descricao, DateTime dataInicial, DateTime dataFinal)
+        {
+            try
+            {
+                LoanDAO loandao = new LoanDAO();
+                if (string.IsNullOrEmpty(usuario))
+                    usuario = "";
+                if (string.IsNullOrEmpty(descricao))
+                    descricao = "";
+                if (dataInicial.Date == Convert.ToDateTime("01/01/0001"))
+                    dataInicial = SqlDateTime.MinValue.Value;
+                if (dataFinal.Date == Convert.ToDateTime("01/01/0001"))
+                    dataFinal = SqlDateTime.MaxValue.Value;
+                if (!HelperController.VerificaAdmin(HttpContext.Session))
+                {
+                    string userId = HttpContext.Session.GetString("UserId");
+                    UserDAO userdao = new UserDAO();
+                    var userData = userdao.Consulta(Convert.ToInt32(userId));
+                    usuario = userData.Name;
+                }
+                var lista = loandao.ConsultaAvancada(usuario, descricao, dataInicial, dataFinal);
+                return PartialView("pvGridLoans", lista);
+            }
+            catch (Exception erro)
+            {
+                return Json(new { erro = true, msg = erro.Message });
             }
         }
     }

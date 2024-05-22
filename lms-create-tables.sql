@@ -388,3 +388,22 @@ BEGIN
     INNER JOIN [Book] ON [Book].BookId = [Loan].BookId
 	WHERE [Loan].UserId = @UserId
 END
+
+-- Create spConsultaAvancada_Loan
+CREATE OR ALTER PROCEDURE [dbo].[spConsultaAvancada_Loan]
+    @usuario VARCHAR(MAX),
+    @descricao VARCHAR(MAX),
+    @dataInicial DATETIME,
+    @dataFinal DATETIME
+AS
+BEGIN
+    SELECT 
+        [Loan].*, [User].Name AS 'UserName', [Book].Title AS 'BookTitle'
+    FROM [Loan]
+    INNER JOIN [User] ON [Loan].UserId = [User].UserId
+    INNER JOIN [Book] ON [Loan].BookId = [Book].BookId
+    WHERE 
+        [User].Name LIKE '%' + @usuario + '%' AND
+        [Book].Title LIKE '%' + @descricao + '%' AND
+        Book.publishedYear BETWEEN @dataInicial AND @dataFinal;
+END
