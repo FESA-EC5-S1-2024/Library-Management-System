@@ -1,50 +1,83 @@
-﻿@model List<BookViewModel>
+﻿@model List<Library_Management_System.Models.BookViewModel>
 
-<h2>Books</h2>
+<h2 class="text-2xl font-bold text-center my-4">Livros</h2>
 
-@{ 
-    if (Context.Session.GetString("Admin") == "true") 
-    {
-        <a href="/book/Create" class="btn btn-success">Register Book</a>
-    }
-}
-<br />
-<br />
-<table class="table table-dark table-responsive">
-    <tr>
-        @{ 
-            if (Context.Session.GetString("Admin") == "true") 
-            {
-                <th>Actions</th>
-            } 
+<div class="flex max-w-7xl justify-end -mt-12 mb-4">
+    @{
+        if (Context.Session.GetString("Admin") == "true")
+        {
+            <a href="/book/Create" class="bg-gray-700 hover:bg-gray-800 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Registrar Livro</a>
         }
-        <th>Title</th>
-        <th>Author Name</th>
-        <th>Category</th>
-        <th>Published Year</th>
-        <th>Photo</th>
-    </tr>
-
-    @foreach (BookViewModel book in Model)
-    {
-        <tr>
-            @{ 
-                if (Context.Session.GetString("Admin") == "true") 
-                {
-                    <td>
-                        <a href="/book/edit?id=@book.Id">✏️</a>
-                        <a href="javascript:deleteRecord('book', @book.Id)">❎</a>
-                    </td>
-                }
-            }
-            <td>@book.Title</td>
-            <td>@book.AuthorName</td>
-            <td>@book.CategoryDescription</td>
-            <td>@book.PublishedYear</td>
-            <td>
-                <img id="imgPreview" src="data:image/jpeg;base64,@book.ImageBase64" class="img-responsive"
-                     width="50">
-            </td>
-        </tr>
     }
-</table>
+</div>
+
+<div class="flex justify-center">
+    <div class="w-full max-w-6xl">
+        <table class="min-w-full bg-gray-700 text-white rounded-lg shadow">
+            <thead>
+                <tr>
+                    @{
+                        if (Context.Session.GetString("Admin") == "true")
+                        {
+                            <th class="py-4 px-6 text-left">Ações</th>
+                        }
+                    }
+                    <th class="py-4 px-6 text-left">Título</th>
+                    <th class="py-4 px-6 text-left">Nome do Autor</th>
+                    <th class="py-4 px-6 text-left">Categoria</th>
+                    <th class="py-4 px-6 text-left">Ano de Publicação</th>
+                    <th class="py-4 px-6 text-left">Foto</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var book in Model)
+                {
+                    <tr class="border-t border-gray-100">
+                        @{
+                            if (Context.Session.GetString("Admin") == "true")
+                            {
+                                <td class="py-2 px-4 text-left">
+                                    <a href="/book/edit?id=@book.Id" class="hover:text-gray-500">✏️</a>
+                                    <a href="javascript:deleteRecord('book', @book.Id)" class="ml-2 hover:text-gray-500">❎</a>
+                                </td>
+                            }
+                        }
+                        <td class="py-2 px-4 text-left">@book.Title</td>
+                        <td class="py-2 px-4 text-left">@book.AuthorName</td>
+                        <td class="py-2 px-4 text-left">@book.CategoryDescription</td>
+                        <td class="py-2 px-4 text-left">@book.PublishedYear</td>
+                        <td class="py-2 px-4 text-left">
+                            <img src="data:image/jpeg;base64,@book.ImageBase64" onclick="openModal(this.src)" class="w-12 h-auto transition-transform transform cursor-pointer hover:scale-150" />
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Modal -->
+<div id="modal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 hidden" onclick="closeModal(event)">
+    <div class="bg-white p-4 my-12 rounded-lg" onclick="event.stopPropagation();">
+        <img id="modalImage" class="max-w-full max-h-screen h-96 mx-auto" />
+    </div>
+</div>
+
+<script>
+    function deleteRecord(controller, id) {
+        if (confirm('Tem certeza que deseja excluir esse registro?')) {
+            window.location.href = '/' + controller + '/Delete?id=' + id;
+        }
+    }
+
+    function openModal(src) {
+        document.getElementById('modal').classList.remove('hidden');
+        document.getElementById('modalImage').src = src;
+    }
+
+    function closeModal(event) {
+        if (!event || event.target == document.getElementById('modal')) {
+            document.getElementById('modal').classList.add('hidden');
+        }
+    }
+</script>

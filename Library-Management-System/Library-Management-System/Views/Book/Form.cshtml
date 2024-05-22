@@ -1,44 +1,86 @@
-﻿@model BookViewModel
+﻿@model Library_Management_System.Models.BookViewModel
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Registro de Livro";
 }
-<h2>Book Registration</h2>
+<h2 class="text-2xl font-bold text-center my-4">Registro de Livro</h2>
 
-<form action="Save" method="post" class="col-md-6" enctype="multipart/form-data">
-    <input type="hidden" name="Operacao" value="@ViewBag.Operacao" />
-    <input asp-for="Id" class="form-control" hidden />
+<div class="flex justify-center">
+    <div class="w-full max-w-md">
+        <form action="Save" method="post" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4" enctype="multipart/form-data">
+            <input type="hidden" name="Operacao" value="@ViewBag.Operacao" />
+            @Html.HiddenFor(model => model.Id)
 
-    <label for="Title" class="control-label">Book Title</label>
-    <input asp-for="Title" class="form-control" />
-    <span asp-validation-for="Title" class="text-danger"></span>
-    <br />
+            <div class="mb-4">
+                <label for="Title" class="block text-gray-700 text-sm font-bold mb-2">Título do Livro</label>
+                <input asp-for="Title" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />
+                <span class="text-red-500 text-xs italic" asp-validation-for="Title"></span>
+            </div>
 
-    <label for="AuthorId" class="control-label">Author</label>
-    <select asp-for="AuthorId" asp-items="ViewBag.Autores" class="form-control"> </select>
-    <span asp-validation-for="AuthorId" class="text-danger"></span>
-    <br />
+            <div class="mb-4">
+                <label for="AuthorId" class="block text-gray-700 text-sm font-bold mb-2">Autor</label>
+                <div class="relative">
+                    <select asp-for="AuthorId" asp-items="ViewBag.Autores" class="form-control shadow appearance-none border rounded w-full py-2 px-3 pr-8 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                    </select>
+                    <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                        <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                            <path d="M7 10l5 5 5-5z" />
+                        </svg>
+                    </div>
+                </div>
+                <span class="text-red-500 text-xs italic" asp-validation-for="AuthorId"></span>
+            </div>
 
-    <label for="CategoryId" class="control-label">Category</label>
-    <select asp-for="CategoryId" asp-items="ViewBag.Categorias" class="form-control"> </select>
-    <span asp-validation-for="CategoryId" class="text-danger"></span>
-    <br />
+            <div class="mb-4">
+                <label for="CategoryId" class="block text-gray-700 text-sm font-bold mb-2">Categoria</label>
+                <div class="relative">
+                    <select asp-for="CategoryId" asp-items="ViewBag.Categorias" class="form-control shadow appearance-none border rounded w-full py-2 px-3 pr-8 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                    </select>
+                    <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                        <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                            <path d="M7 10l5 5 5-5z" />
+                        </svg>
+                    </div>
+                </div>
+                <span class="text-red-500 text-xs italic" asp-validation-for="CategoryId"></span>
+            </div>
 
-    <label for="ISBN" class="control-label">ISBN</label>
-    <input asp-for="ISBN" class="form-control" />
-    <span asp-validation-for="ISBN" class="text-danger"></span>
-    <br />
+            <div class="mb-4">
+                <label for="ISBN" class="block text-gray-700 text-sm font-bold mb-2">ISBN</label>
+                <input asp-for="ISBN" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />
+                <span class="text-red-500 text-xs italic" asp-validation-for="ISBN"></span>
+            </div>
 
-    <label for="PublishedYear" class="control-label">PublishedYear</label>
-    <input asp-for="PublishedYear" class="form-control" />
-    <span asp-validation-for="PublishedYear" class="text-danger"></span>
-    <br />
+            <div class="mb-4">
+                <label for="PublishedYear" class="block text-gray-700 text-sm font-bold mb-2">Ano de Publicação</label>
+                <input asp-for="PublishedYear" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />
+                <span class="text-red-500 text-xs italic" asp-validation-for="PublishedYear"></span>
+            </div>
 
-    <input type="file" name="Image" id="Image" onchange="displayImage()" class="btn btn-secondary">
-    <img id="imgPreview" src="data:image/jpeg;base64,@Model.ImageBase64" class="img-responsive" width="200">
-    <span asp-validation-for="Image" class="text-danger"></span>
-    <br />
+            <div class="mb-4">
+                <label for="Image" class="block text-gray-700 text-sm font-bold mb-2">Imagem</label>
+                <input type="file" name="Image" id="Image" onchange="displayImage()" class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded file:hover:cursor-pointer file:border-0 file:text-sm file:font-semibold file:bg-gray-50 file:text-gray-700 hover:file:bg-gray-100" />
+                <img id="imgPreview" src="data:image/jpeg;base64,@Model.ImageBase64" class="img-responsive mt-2 w-48 h-auto rounded" />
+                <span class="text-red-500 text-xs italic" asp-validation-for="Image"></span>
+            </div>
 
-    <br />
-    <input type="submit" value="Save" class="btn btn-info" />
-    <br />
-</form>
+            <div class="flex items-center justify-between">
+                <input type="submit" value="Salvar" class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    function displayImage() {
+        var input = document.getElementById('Image');
+        var preview = document.getElementById('imgPreview');
+        var reader = new FileReader();
+
+        reader.onload = function (e) {
+            preview.src = e.target.result;
+        };
+
+        reader.readAsDataURL(input.files[0]);
+    }
+</script>

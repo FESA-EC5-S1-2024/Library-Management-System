@@ -1,19 +1,25 @@
-﻿@model CategoryViewModel
+﻿@model Library_Management_System.Models.CategoryViewModel
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Registro de Categoria";
 }
-<h2>Category Registration</h2>
+<h2 class="text-2xl font-bold text-center my-4">Registro de Categoria</h2>
 
-<form action="Save" method="post" class="col-md-6">
-    <input type="hidden" name="Operacao" value="@ViewBag.Operacao" />
-    <input asp-for="Id" class="form-control" hidden />
+<div class="flex justify-center">
+    <div class="w-full max-w-md">
+        <form action="Save" method="post" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+            <input type="hidden" name="Operacao" value="@ViewBag.Operacao" />
+            @Html.HiddenFor(model => model.Id)
 
-    <label for="Description" class="control-label">Description</label>
-    <input asp-for="Description" class="form-control" />
-    <span asp-validation-for="Description" class="text-danger"></span>
-    <br />
+            <div class="mb-4">
+                <label for="Description" class="block text-gray-700 text-sm font-bold mb-2">Descrição</label>
+                <input asp-for="Description" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />
+                <span class="text-red-500 text-xs italic" asp-validation-for="Description"></span>
+            </div>
 
-    <br />
-    <input type="submit" value="Save" class="btn btn-info" />
-    <br />
-</form>
+            <div class="flex items-center justify-between">
+                <input type="submit" value="Salvar" class="bg-gray-700 hover:cursor-pointer hover:bg-gray-800 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" />
+            </div>
+        </form>
+    </div>
+</div>

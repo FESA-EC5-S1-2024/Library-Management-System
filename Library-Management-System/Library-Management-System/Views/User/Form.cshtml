@@ -1,35 +1,47 @@
-﻿@model UserViewModel
-@{ Layout = "~/Views/Shared/_Layout.cshtml"; }
-<h2>User Registration</h2>
+﻿@model Library_Management_System.Models.UserViewModel
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "User Registration";
+}
+<h2 class="text-2xl font-bold text-center my-4">Novo Usuário</h2>
+<div class="flex justify-center">
+    <div class="w-full max-w-md">
+        <form action="Save" method="post" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
 
-<form action="Save" method="post" class="col-md-6">
-    <input type="hidden" name="Operacao" value="@ViewBag.Operacao" />
+            <input type="hidden" name="Operacao" value="@ViewBag.Operacao" />
+            @Html.HiddenFor(model => model.Id)
+            @Html.HiddenFor(model => model.RegistrationDate)
 
-    @Html.HiddenFor(model => model.Id)
-    @Html.HiddenFor(model => model.RegistrationDate)
+            <div class="mb-4">
+                <label for="Name" class="block text-gray-700 text-sm font-bold mb-2">Nome</label>
+                <input asp-for="Name" class="shadow appearance-none border rounded w-full py-2 px-2 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />
+                <span asp-validation-for="Name" class="text-red-500 text-xs italic"></span>
+            </div>
 
-    <label for="Name" class="control-label">Nome</label>
-    <input asp-for="Name" class="form-control" />
-    <span asp-validation-for="Name" class="text-danger"></span>
-    <br />
+            <div class="mb-4">
+                <label for="Email" class="block text-gray-700 text-sm font-bold mb-2">Email</label>
+                <input asp-for="Email" class="shadow appearance-none border rounded w-full py-2 px-2 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />
+                <span asp-validation-for="Email" class="text-red-500 text-xs italic"></span>
+            </div>
 
-    <label for="Email" class="control-label">Email</label>
-    <input asp-for="Email" class="form-control" />
-    <span asp-validation-for="Email" class="text-danger"></span>
-    <br />
+            <div class="mb-4">
+                <label for="Password" class="block text-gray-700 text-sm font-bold mb-2">Senha</label>
+                <input asp-for="Password" class="shadow appearance-none border rounded w-full py-2 px-2 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />
+                <span asp-validation-for="Password" class="text-red-500 text-xs italic"></span>
+            </div>
 
-    <label for="Password" class="control-label">Password</label>
-    <input asp-for="Password" class="form-control" />
-    <span asp-validation-for="Password" class="text-danger"></span>
-    <br />
+            @if (Context.Session.GetString("Admin") == "true")
+            {
+                <div class="mb-4">
+                    <label for="TypeId" class="block text-gray-700 text-sm font-bold mb-2">TypeId</label>
+                    <input asp-for="TypeId" class="shadow appearance-none border rounded w-full py-2 px-2 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />
+                    <span asp-validation-for="TypeId" class="text-red-500 text-xs italic"></span>
+                </div>
+            }
 
-    @{ if (Context.Session.GetString("Admin") == "true") {
-<label for="TypeId" class="control-label">TypeId</label>
-                <input asp-for="TypeId" class="form-control" />
-                                <span asp-validation-for="TypeId" class="text-danger"></span>
-                                                <br /> } }
-
-    <br />
-    <input type="submit" value="Save" class="btn btn-info" />
-    <br />
-</form>
+            <div class="flex items-center justify-between">
+                <input type="submit" value="Salvar" class="bg-gray-700 hover:bg-gray-800 hover:cursor-pointer text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" />
+            </div>
+        </form>
+    </div>
+</div>

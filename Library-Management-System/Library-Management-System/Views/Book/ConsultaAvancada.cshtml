@@ -1,35 +1,51 @@
 ﻿@{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<fieldset id="areaFiltro" class="form-group">
-    <legend>Consulta avançada de Livros</legend>
-    <div class="row">
-        <div class="col-lg-4">
-            Título<br />
-            <input type="text" id="title" class="form-control" />
+<fieldset id="areaFiltro" class="form-group bg-gray-200 p-4 rounded-lg shadow-md">
+    <p class="text-xl font-bold mb-4">Consulta Avançada de Livros</p>
+    <div class="flex flex-wrap gap-4">
+        <div class="w-full lg:w-auto flex-1">
+            <label for="title" class="block text-gray-700 font-bold mb-2">Título</label>
+            <input type="text" id="title" class="form-control shadow appearance-none border rounded w-full py-1 px-2 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />
         </div>
-        <div class="col-lg-3">
-            Autor <br />
-            <select id="authorName" class="form-control" asp-items="@ViewBag.Autores"></select>
+        <div class="w-full lg:w-auto flex-1 relative">
+            <label for="authorName" class="block text-gray-700 font-bold mb-2">Autor</label>
+            <select id="authorName" class="form-control shadow appearance-none border rounded w-full py-1 px-2 pr-8 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" asp-items="@ViewBag.Autores"></select>
+            <div class="pointer-events-none absolute inset-y-2 right-2 flex items-center pt-7 text-gray-700">
+                <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                    <path d="M7 10l5 5 5-5z" />
+                </svg>
+            </div>
         </div>
-        <div class="col-lg-3">
-            Categoria <br />
-            <select id="categoryDescription" class="form-control" asp-items="@ViewBag.Categorias"></select>
+        <div class="w-full lg:w-auto flex-1">
+            <label for="categoryDescription" class="block text-gray-700 font-bold mb-2">Categoria</label>
+            <select id="categoryDescription" class="form-control shadow appearance-none border rounded w-full py-1 px-2 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" asp-items="@ViewBag.Categorias"></select>
+            <div class="pointer-events-none absolute inset-y-2 right-2 flex items-center pt-7 text-gray-700">
+                <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                    <path d="M7 10l5 5 5-5z" />
+                </svg>
+            </div>
         </div>
-        <div class="col-lg-2">
-            Período <br />
-            <input type="number" id="dataInicial" class="form-control" min="1800" max="2100" placeholder="AAAA" />
+        <div class="w-full lg:w-auto flex-1">
+            <label for="dataInicial" class="block text-gray-700 font-bold mb-2">Período Inicial</label>
+            <input type="number" id="dataInicial" class="form-control shadow appearance-none border rounded w-full py-1 px-2 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" min="1800" max="2100" placeholder="AAAA" />
         </div>
-        <div class="col-lg-2">
-            <br />
-            <input type="number" id="dataFinal" class="form-control" min="1800" max="2100" placeholder="AAAA" />
+        <div class="w-full lg:w-auto flex-1">
+            <label for="dataFinal" class="block text-gray-700 font-bold mb-2">Período Final</label>
+            <input type="number" id="dataFinal" class="form-control shadow appearance-none border rounded w-full py-1 px-2 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" min="1800" max="2100" placeholder="AAAA" />
         </div>
-        <div class="col-lg-1">
-            <br />
-            <input type="button" id="btnFiltro" class="btn btn-success" value="Aplicar"
-                   onclick="aplicaFiltroConsultaAvancada()" />
+        <div class="w-full lg:w-auto flex items-end">
+            <input type="button" id="btnFiltro" class="bg-gray-700 hover:bg-gray-800 text-white font-bold py-1 px-4 rounded hover:cursor-pointer focus:outline-none focus:shadow-outline" value="Aplicar" onclick="aplicaFiltroConsultaAvancada()" />
         </div>
     </div>
 </fieldset>
-<div id="resultadoConsulta" class="table-responsive">
+<div id="resultadoConsulta" class="table-responsive mt-4">
+    <!-- Resultados da consulta serão exibidos aqui -->
 </div>
+
+<script>
+    function aplicaFiltroConsultaAvancada() {
+        // Lógica para aplicar filtros e exibir resultados
+        // Pode-se usar AJAX para buscar os dados de forma mais eficiente
+    }
+</script>
