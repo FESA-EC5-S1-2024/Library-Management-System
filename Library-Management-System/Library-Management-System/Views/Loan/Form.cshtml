@@ -1,37 +1,65 @@
-﻿@model LoanViewModel
-@{ Layout = "~/Views/Shared/_Layout.cshtml"; }
-<h2>Loan Registration</h2>
+﻿@model Library_Management_System.Models.LoanViewModel
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Empréstimo";
+}
+<h2 class="text-2xl font-bold text-center my-4">Registro de Empréstimo</h2>
 
-<form action="Save" method="post" class="col-md-6">
-    <input type="hidden" name="Operacao" value="@ViewBag.Operacao" />
-    <input asp-for="Id" class="form-control" hidden />
+<div class="flex justify-center">
+    <div class="w-full max-w-md">
+        <form action="Save" method="post" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+            <input type="hidden" name="Operacao" value="@ViewBag.Operacao" />
+            @Html.HiddenFor(model => model.Id)
 
-    <label for="UserId" class="control-label">Usuário</label>
-    <select asp-for="UserId" asp-items="ViewBag.Usuarios" class="form-control"> </select>
-    <span asp-validation-for="UserId" class="text-danger"></span>
-    <br />
+            <div class="mb-4">
+                <label for="UserId" class="block text-gray-700 text-sm font-bold mb-2">Usuário</label>
+                <div class="relative">
+                    <select asp-for="UserId" asp-items="ViewBag.Usuarios" class="form-control shadow appearance-none border rounded w-full py-2 px-3 pr-8 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                    </select>
+                    <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                        <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                            <path d="M7 10l5 5 5-5z" />
+                        </svg>
+                    </div>
+                </div>
+                <span class="text-red-500 text-xs italic" asp-validation-for="UserId"></span>
+            </div>
 
-    <label for="BookId" class="control-label">Livro</label>
-    <select asp-for="BookId" asp-items="ViewBag.Livros" class="form-control"> </select>
-    <span asp-validation-for="BookId" class="text-danger"></span>
-    <br />
+            <div class="mb-4">
+                <label for="BookId" class="block text-gray-700 text-sm font-bold mb-2">Livro</label>
+                <div class="relative">
+                    <select asp-for="BookId" asp-items="ViewBag.Livros" class="form-control shadow appearance-none border rounded w-full py-2 px-3 pr-8 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                    </select>
+                    <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                        <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                            <path d="M7 10l5 5 5-5z" />
+                        </svg>
+                    </div>
+                </div>
+                <span class="text-red-500 text-xs italic" asp-validation-for="BookId"></span>
+            </div>
 
-    <label for="LoanDate" class="control-label">Data de empréstimo</label>
-    <input asp-for="LoanDate" class="form-control" />
-    <span asp-validation-for="LoanDate" class="text-danger"></span>
-    <br />
+            <div class="mb-4">
+                <label for="LoanDate" class="block text-gray-700 text-sm font-bold mb-2">Data de Empréstimo</label>
+                <input asp-for="LoanDate" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />
+                <span class="text-red-500 text-xs italic" asp-validation-for="LoanDate"></span>
+            </div>
 
-    <label for="DueDate" class="control-label">Data de vencimento</label>
-    <input asp-for="DueDate" class="form-control" />
-    <span asp-validation-for="DueDate" class="text-danger"></span>
-    <br />
+            <div class="mb-4">
+                <label for="DueDate" class="block text-gray-700 text-sm font-bold mb-2">Data de Vencimento</label>
+                <input asp-for="DueDate" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />
+                <span class="text-red-500 text-xs italic" asp-validation-for="DueDate"></span>
+            </div>
 
-    <label for="ReturnDate" class="control-label">Data de retorno</label>
-    <input asp-for="ReturnDate" class="form-control" />
-    <span asp-validation-for="ReturnDate" class="text-danger"></span>
-    <br />
+            <div class="mb-4">
+                <label for="ReturnDate" class="block text-gray-700 text-sm font-bold mb-2">Data de Retorno</label>
+                <input asp-for="ReturnDate" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />
+                <span class="text-red-500 text-xs italic" asp-validation-for="ReturnDate"></span>
+            </div>
 
-    <br />
-    <input type="submit" value="Save" class="btn btn-info" />
-    <br />
-</form>
+            <div class="flex items-center justify-between">
+                <input type="submit" value="Salvar" class="bg-gray-700 hover:bg-gray-800 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" />
+            </div>
+        </form>
+    </div>
+</div>

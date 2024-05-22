@@ -1,15 +1,16 @@
-﻿@model ErrorViewModel
+﻿@model Library_Management_System.Models.ErrorViewModel
 @{
-    ViewData["Title"] = "Error";
+    ViewData["Title"] = "Erro";
 }
 
-<h1 class="text-danger">Oops!</h1>
-<h2 class="text-danger">An error occurred, see more details below.</h2>
-<br />
-
-<a href="/home/index">Go back to Home page</a>
-<br />
-
-<code class="text-danger">
-    @Model.Erro
-</code>
+<div class="flex items-center justify-center bg-gray-100">
+    <div class="bg-white w-3/5 shadow-lg rounded-lg p-6">
+        <h1 class="text-center text-4xl font-bold text-red-600">Erro</h1>
+        <p class="text-center text-gray-900 my-8 p-2 mx-6 border border-red-500 rounded-lg">
+            @Model.Erro
+        </p>
+        <a href="/home/index" class="inline-block bg-gray-700 hover:bg-gray-800 text-white font-bold py-2 px-3 rounded focus:outline-none focus:shadow-outline">
+            Voltar para a Home
+        </a>
+    </div>
+</div>

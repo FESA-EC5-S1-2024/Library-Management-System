@@ -4,7 +4,8 @@
 @{
     ViewData["Title"] = "Home";
 }
-<p class="text-xl">Library Management System</p>
+<p class="text-3xl font-bold text-center mt-4">Sistema de Gerenciamento de Livraria</p>
+
 <div class="container mx-auto px-4 py-8 flex flex-wrap justify-center">
     @{
         if (Context.Session.GetString("Logado") == "true")
@@ -65,3 +66,11 @@
         }
     }
 </div>
+
+<!-- Seção Sobre -->
+@* <div class="container mx-auto px-4 py-8">
+    <div class="bg-white shadow-lg rounded-lg overflow-hidden p-6 mb-8">
+        <h2 class="text-2xl font-bold mb-2">Sobre</h2>
+        <p class="text-gray-700">Bem-vindo ao Sistema de Gerenciamento de Livraria. Esta aplicação foi desenvolvida para ajudar a organizar e gerenciar as operações diárias de uma livraria, fornecendo um conjunto completo de ferramentas para gerenciar livros, empréstimos, autores, categorias e usuários. Se você é um administrador, pode acessar funcionalidades adicionais, como o gerenciamento de autores, categorias e usuários do sistema.</p>
+    </div>
+</div> *@
