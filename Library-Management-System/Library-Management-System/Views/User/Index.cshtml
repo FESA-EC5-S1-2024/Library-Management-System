@@ -1,4 +1,7 @@
 ﻿@model List<UserViewModel>
+@{
+    ViewData["Title"] = "Usuários";
+}
 
 <h2 class="text-2xl font-bold text-center my-4">Usuários</h2>
 
@@ -11,23 +14,23 @@
         <table class="min-w-full bg-gray-700 text-white rounded-lg shadow">
             <thead>
                 <tr>
-                    <th class="py-4 px-6 text-left">Ações</th>
                     <th class="py-4 px-6 text-left">Nome</th>
                     <th class="py-4 px-6 text-left">Email</th>
                     <th class="py-4 px-6 text-left">Data de Registro</th>
+                    <th class="py-4 px-6 text-left">Ações</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach (var user in Model)
                 {
                     <tr class="border-t border-gray-100">
+                        <td class="py-2 px-4 text-left">@user.Name</td>
+                        <td class="py-2 px-4 text-left">@user.Email</td>
+                        <td class="py-2 px-4 text-left">@user.RegistrationDate.ToShortDateString()</td>
                         <td class="py-2 px-4 text-left">
                             <a href="/user/edit?id=@user.Id" class="hover:text-gray-500">✏️</a>
                             <a href="javascript:deleteRecord('user', @user.Id)" class="ml-2 hover:text-gray-500">❌</a>
                         </td>
-                        <td class="py-2 px-4 text-left">@user.Name</td>
-                        <td class="py-2 px-4 text-left">@user.Email</td>
-                        <td class="py-2 px-4 text-left">@user.RegistrationDate.ToShortDateString()</td>
                     </tr>
                 }
             </tbody>

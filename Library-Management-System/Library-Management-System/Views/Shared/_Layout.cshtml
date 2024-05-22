@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - Library</title>
+    <title>Biblioteca - @ViewData["Title"]</title>
     <link rel="stylesheet" href="~/css/site.css" />
     <link href="~/lib/bootstrap-sweetalert-1.0.1/dist/sweetalert.css" rel="stylesheet" />
     <script src="https://cdn.tailwindcss.com"></script>
@@ -42,7 +42,7 @@
                                         <a class="hover:text-gray-400 text-sm" asp-area="" asp-controller="Category" asp-action="Index">Categorias</a>
                                     </li>
                                     <li>
-                                        <a class="hover:text-gray-400 text-sm" asp-area="" asp-controller="User" asp-action="Index">Usuário</a>
+                                        <a class="hover:text-gray-400 text-sm" asp-area="" asp-controller="User" asp-action="Index">Usuários</a>
                                     </li>
                                 }
                                 <li>
@@ -54,13 +54,17 @@
                             }
                         }
                     </ul>
-                    @if (Context.Session.GetString("Logado") == "true")
-                    {
-                        <a class="hover:text-gray-200 text-gray-400 flex-end ml-2" asp-area="" asp-controller="Login" asp-action="LogOff">Sair</a>
-                    } else
-                    {
-                        <a class="hover:text-gray-400 text-white" asp-area="" asp-controller="Login" asp-action="Index">Login</a>
-                    }
+                    <ul class="lg:space-x-6">
+                        <a class="hover:text-gray-400 text-white flex-end" asp-area="" asp-controller="About" asp-action="Index">Sobre</a>
+                        @if (Context.Session.GetString("Logado") == "true")
+                        {
+                            <a class="hover:text-gray-200 text-gray-400 flex-end ml-2" asp-area="" asp-controller="Login" asp-action="LogOff">Sair</a>
+                        }
+                        else
+                        {
+                            <a class="hover:text-gray-400 text-white" asp-area="" asp-controller="Login" asp-action="Index">Login</a>
+                        }
+                    </ul>
                 </div>
             </div>
         </nav>
@@ -73,7 +77,7 @@
 
     <footer class="bg-gray-900 border-t border-gray-700 text-gray-400 py-4 mt-auto">
         <div class="container mx-auto px-4 text-center">
-            &copy; 2024 - Sistema de Gerenciamento de Livraria
+            &copy; 2024 - Sistema de Gerenciamento de Biblioteca
         </div>
     </footer>
     @RenderSection("Scripts", required: false)

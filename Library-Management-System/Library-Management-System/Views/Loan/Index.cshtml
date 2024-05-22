@@ -1,4 +1,7 @@
 ﻿@model List<Library_Management_System.Models.LoanViewModel>
+@{
+    ViewData["Title"] = "Empréstimos";
+}
 
 <h2 class="text-2xl font-bold text-center my-4">Empréstimos</h2>
 
@@ -20,37 +23,37 @@
         <table class="min-w-full bg-gray-700 text-white rounded-lg shadow">
             <thead>
                 <tr>
-                    @{
-                        if (Context.Session.GetString("Admin") == "true")
-                        {
-                            <th class="py-4 px-6 text-left">Ações</th>
-                            <th class="py-4 px-6 text-left">Nome do Usuário</th>
-                        }
-                    }
                     <th class="py-4 px-6 text-left">Título do Livro</th>
                     <th class="py-4 px-6 text-left">Data de Empréstimo</th>
                     <th class="py-4 px-6 text-left">Data de Devolução</th>
                     <th class="py-4 px-6 text-left">Data de Retorno</th>
+                    @{
+                        if (Context.Session.GetString("Admin") == "true")
+                        {
+                            <th class="py-4 px-6 text-left">Nome do Usuário</th>
+                            <th class="py-4 px-6 text-left">Ações</th>
+                        }
+                    }
                 </tr>
             </thead>
             <tbody>
                 @foreach (var loan in Model)
                 {
                     <tr class="border-t border-gray-100">
-                        @{
-                            if (Context.Session.GetString("Admin") == "true")
-                            {
-                                <td class="py-2 px-4 text-left">
-                                    <a href="/loan/edit?id=@loan.Id" class="hover:text-gray-500">✏️</a>
-                                    <a href="javascript:deleteRecord('loan', @loan.Id)" class="ml-2 hover:text-gray-500">❌</a>
-                                </td>
-                                <td class="py-2 px-4 text-left">@loan.UserName</td>
-                            }
-                        }
                         <td class="py-2 px-4 text-left">@loan.BookTitle</td>
                         <td class="py-2 px-4 text-left">@loan.LoanDate.ToShortDateString()</td>
                         <td class="py-2 px-4 text-left">@loan.DueDate.ToShortDateString()</td>
                         <td class="py-2 px-4 text-left">@((loan.ReturnDate.HasValue ? loan.ReturnDate?.ToShortDateString() : "Não Devolvido"))</td>
+                        @{
+                            if (Context.Session.GetString("Admin") == "true")
+                            {
+                                <td class="py-2 px-4 text-left">@loan.UserName</td>
+                                <td class="py-2 px-4 text-left">
+                                    <a href="/loan/edit?id=@loan.Id" class="hover:text-gray-500">✏️</a>
+                                    <a href="javascript:deleteRecord('loan', @loan.Id)" class="ml-2 hover:text-gray-500">❌</a>
+                                </td>
+                            }
+                        }
                     </tr>
                 }
             </tbody>

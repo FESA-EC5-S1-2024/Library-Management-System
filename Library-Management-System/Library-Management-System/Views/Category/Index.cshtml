@@ -1,4 +1,7 @@
 ﻿@model List<CategoryViewModel>
+@{
+    ViewData["Title"] = "Categorias";
+}
 
 <h2 class="text-2xl font-bold text-center my-4">Categorias</h2>
 
@@ -19,11 +22,11 @@
                 @foreach (var category in Model)
                 {
                     <tr class="border-t border-gray-100">
+                        <td class="py-2 px-4 text-left">@category.Description</td>
                         <td class="py-2 px-4 text-left">
                             <a href="/category/edit?id=@category.Id" class="hover:text-gray-500">✏️</a>
                             <a onclick="deleteRecord('category', @category.Id)" href="javascript:;" class="ml-2 hover:text-gray-500">❌</a>
                         </td>
-                        <td class="py-2 px-4 text-left">@category.Description</td>
                     </tr>
                 }
             </tbody>
