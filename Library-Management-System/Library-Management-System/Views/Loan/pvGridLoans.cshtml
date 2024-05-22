@@ -1,29 +1,55 @@
-﻿@model List<LoanViewModel>
-<table class="table table-striped">
-    <tr>
-        @{if (Context.Session.GetString("Admin") == "true")
-        {
-            <th>Código</th>
-            <th>Usuário</th>
-        }}
-        <th>Título</th>
-        <th>Data de Empréstimo</th>
-        <th>Data de Vencimento</th>
-        <th>Data de Retorno</th>
-    </tr>
-    @foreach (var loan in Model)
-    {
-        <tr>
-            @{if (Context.Session.GetString("Admin") == "true")
-            {
-                <th>@loan.Id</th>
-                <th>@loan.UserName</th>
-            }}
-            <td>@loan.BookTitle</td>
+﻿@model List<Library_Management_System.Models.LoanViewModel>
 
-            <td>@loan.LoanDate.ToShortDateString()</td>
-            <td>@loan.DueDate.ToShortDateString()</td>
-            <td>@(loan.ReturnDate.HasValue ? loan.ReturnDate?.ToShortDateString() : "Not Returned")</td>
-        </tr>
+<h2 class="text-2xl font-bold text-center mt-6 my-4">Empréstimos</h2>
+
+<div class="flex justify-end w-5/6 -mt-12 mb-4">
+    <a href="@Url.Action("Create")" class="bg-gray-700 hover:bg-gray-800 hover:cursor-pointer text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Registrar Empréstimo</a>
+</div>
+
+<div class="flex justify-center">
+    <div class="w-full max-w-6xl">
+        <table class="min-w-full bg-gray-700 text-white rounded-lg shadow">
+            <thead>
+                <tr>
+                    @{
+                        if (Context.Session.GetString("Admin") == "true")
+                        {
+                            <th class="py-2 px-4 text-left">Código</th>
+                            <th class="py-4 px-6 text-left">Usuário</th>
+                        }
+                    }
+                    <th class="py-4 px-6 text-left">Título</th>
+                    <th class="py-4 px-6 text-left">Data de Empréstimo</th>
+                    <th class="py-4 px-6 text-left">Data de Vencimento</th>
+                    <th class="py-4 px-6 text-left">Data de Retorno</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var loan in Model)
+                {
+                    <tr class="border-t border-gray-100">
+                        @{
+                            if (Context.Session.GetString("Admin") == "true")
+                            {
+                                <td class="py-2 px-4 text-left">@loan.Id</td>
+                                <td class="py-2 px-4 text-left">@loan.UserName</td>
+                            }
+                        }
+                        <td class="py-2 px-4 text-left">@loan.BookTitle</td>
+                        <td class="py-2 px-4 text-left">@loan.LoanDate.ToShortDateString()</td>
+                        <td class="py-2 px-4 text-left">@loan.DueDate.ToShortDateString()</td>
+                        <td class="py-2 px-4 text-left">@((loan.ReturnDate.HasValue ? loan.ReturnDate?.ToShortDateString() : "Não Devolvido"))</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+    function deleteRecord(controller, id) {
+        if (confirm('Tem certeza que deseja excluir esse registro?')) {
+            window.location.href = '/' + controller + '/Delete?id=' + id;
+        }
     }
-</table>
+</script>
