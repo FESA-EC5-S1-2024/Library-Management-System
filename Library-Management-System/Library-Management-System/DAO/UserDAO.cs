@@ -36,6 +36,7 @@ namespace Library_Management_System.DAO {
         protected override void SetTabela() {
             Tabela = "User";
             NomeSpListagem = "spListagem_User";
+            NomeSpDelete = "spDelete_User_And_Loans";
         }
 
         public UserViewModel ConsultaUsuario(string email) {

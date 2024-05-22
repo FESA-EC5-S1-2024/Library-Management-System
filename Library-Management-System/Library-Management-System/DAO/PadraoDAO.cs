@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Data;
 using System;
+using System.Linq;
 
 namespace Library_Management_System.DAO {
     public abstract class PadraoDAO<T> where T : PadraoViewModel {
@@ -12,6 +13,7 @@ namespace Library_Management_System.DAO {
 
         protected string Tabela { get; set; }
         protected string NomeSpListagem { get; set; } = "spListagem";
+        protected string NomeSpDelete { get; set; } = "spDelete";
         protected abstract SqlParameter[] CriaParametros(T model, bool isInsert = false);
         protected abstract T MontaModel(DataRow registro);
         protected abstract void SetTabela();
@@ -27,10 +29,11 @@ namespace Library_Management_System.DAO {
         public virtual void Delete(int id) {
             var p = new SqlParameter[]
             {
-                new SqlParameter("id", id),
-                new SqlParameter("tabela", Tabela)
+                new SqlParameter("id", id)
             };
-            HelperDAO.ExecutaProc("spDelete", p);
+            if (NomeSpDelete == "spDelete")
+                p.Append(new SqlParameter("tabela", Tabela));
+            HelperDAO.ExecutaProc(NomeSpDelete, p);
         }
 
         public virtual T Consulta(int id) {

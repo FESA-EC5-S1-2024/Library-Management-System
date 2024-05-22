@@ -31,6 +31,7 @@ namespace Library_Management_System.DAO {
         protected override void SetTabela() {
             Tabela = "Author";
             NomeSpListagem = "spListagem_Author";
+            NomeSpDelete = "spDelete_Author_And_Books";
         }
     }
 }

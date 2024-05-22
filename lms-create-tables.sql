@@ -220,7 +220,7 @@ END
 
 -- Create spDelete_User_And_Loans
 CREATE OR ALTER PROCEDURE [dbo].[spDelete_User_And_Loans]
-    @UserId INT
+    @id INT
 AS
 BEGIN
     SET NOCOUNT ON;
@@ -230,11 +230,11 @@ BEGIN
 
         -- Deletar empréstimos relacionados ao usuário
         DELETE FROM Loan
-        WHERE UserId = @UserId;
+        WHERE UserId = @id;
 
         -- Deletar o usuário
         DELETE FROM [User]
-        WHERE UserId = @UserId;
+        WHERE UserId = @id;
 
         COMMIT TRANSACTION;
     END TRY
@@ -276,7 +276,7 @@ END
 
 -- Create spDelete_Author_And_Books
 CREATE OR ALTER PROCEDURE [dbo].[spDelete_Author_And_Books]
-    @AuthorId INT
+    @id INT
 AS
 BEGIN
     SET NOCOUNT ON;
@@ -286,15 +286,15 @@ BEGIN
 
         -- Deletar empréstimos relacionados aos livros do autor
         DELETE FROM Loan
-        WHERE BookId IN (SELECT BookId FROM Book WHERE AuthorId = @AuthorId);
+        WHERE BookId IN (SELECT BookId FROM Book WHERE AuthorId = @id);
 
         -- Deletar livros relacionados ao autor
         DELETE FROM Book
-        WHERE AuthorId = @AuthorId;
+        WHERE AuthorId = @id;
 
         -- Deletar o autor
         DELETE FROM Author
-        WHERE AuthorId = @AuthorId;
+        WHERE AuthorId = @id;
 
         COMMIT TRANSACTION;
     END TRY
@@ -330,7 +330,7 @@ END
 
 -- Create spDelete_Category_And_Books
 CREATE OR ALTER PROCEDURE [dbo].[spDelete_Category_And_Books]
-    @CategoryId INT
+    @id INT
 AS
 BEGIN
     SET NOCOUNT ON;
@@ -340,15 +340,15 @@ BEGIN
 
         -- Deletar empréstimos relacionados aos livros da categoria
         DELETE FROM Loan
-        WHERE BookId IN (SELECT BookId FROM Book WHERE CategoryId = @CategoryId);
+        WHERE BookId IN (SELECT BookId FROM Book WHERE CategoryId = @id);
 
         -- Deletar livros relacionados à categoria
         DELETE FROM Book
-        WHERE CategoryId = @CategoryId;
+        WHERE CategoryId = @id;
 
         -- Deletar a categoria
         DELETE FROM Category
-        WHERE CategoryId = @CategoryId;
+        WHERE CategoryId = @id;
 
         COMMIT TRANSACTION;
     END TRY
@@ -429,7 +429,7 @@ END
 
 -- Create spDelete_Book_And_Loans
 CREATE OR ALTER PROCEDURE [dbo].[spDelete_Book_And_Loans]
-    @BookId INT
+    @id INT
 AS
 BEGIN
     SET NOCOUNT ON;
@@ -439,11 +439,11 @@ BEGIN
 
         -- Deletar empréstimos relacionados ao livro
         DELETE FROM Loan
-        WHERE BookId = @BookId;
+        WHERE BookId = @id;
 
         -- Deletar o livro
         DELETE FROM Book
-        WHERE BookId = @BookId;
+        WHERE BookId = @id;
 
         COMMIT TRANSACTION;
     END TRY

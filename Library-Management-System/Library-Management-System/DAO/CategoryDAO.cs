@@ -27,6 +27,7 @@ namespace Library_Management_System.DAO {
         protected override void SetTabela() {
             Tabela = "Category";
             NomeSpListagem = "spListagem_Category";
+            NomeSpDelete = "spDelete_Category_And_Books";
         }
     }
 }

@@ -46,6 +46,7 @@ namespace Library_Management_System.DAO {
         protected override void SetTabela() {
             Tabela = "Book";
             NomeSpListagem = "spListagem_Book";
+            NomeSpDelete = "spDelete_Book_And_Loans";
         }
 
         public List<BookViewModel> ConsultaAvancada(string descricao, int autor, int categoria, int dataInicial, int dataFinal)
