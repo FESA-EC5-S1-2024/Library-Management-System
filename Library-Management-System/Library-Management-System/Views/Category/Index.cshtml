@@ -21,7 +21,7 @@
                     <tr class="border-t border-gray-100">
                         <td class="py-2 px-4 text-left">
                             <a href="/category/edit?id=@category.Id" class="hover:text-gray-500">✏️</a>
-                            <a onclick="deleteRecord('category', @category.Id)" href="javascript:;" class="ml-2 hover:text-gray-500">❎</a>
+                            <a onclick="deleteRecord('category', @category.Id)" href="javascript:;" class="ml-2 hover:text-gray-500">❌</a>
                         </td>
                         <td class="py-2 px-4 text-left">@category.Description</td>
                     </tr>
@@ -30,11 +30,3 @@
         </table>
     </div>
 </div>
-
-<script>
-    function deleteRecord(controller, id) {
-        if (confirm('Tem certeza que deseja excluir essa categoria?')) {
-            window.location.href = '/' + controller + '/Delete?id=' + id;
-        }
-    }
-</script>
