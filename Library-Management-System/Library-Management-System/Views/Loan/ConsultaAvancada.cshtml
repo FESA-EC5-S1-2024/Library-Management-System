@@ -1,35 +1,36 @@
 ﻿@{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<fieldset id="areaFiltro" class="form-group">
-    <legend>Consulta avançada de Empréstimos</legend>
-    <div class="row">
-        @{if (Context.Session.GetString("Admin") == "true")
-        {
-            <div class="col-lg-3">
-                Usuário <br />
-                <input type="text" id="userName" class="form-control" />
-            </div>
-        }}
+<fieldset id="areaFiltro" class="form-group bg-gray-200 p-4 rounded-lg shadow-md">
+    <a class="text-xl font-bold mb-4">Consulta Avançada de Empréstimos</a>
+    <div class="flex flex-wrap gap-4 pt-4">
+        @{
+            if (Context.Session.GetString("Admin") == "true")
+            {
+                <div class="w-full lg:w-auto flex-1">
+                    <label for="userName" class="block text-gray-700 text-sm font-bold mb-2">Usuário</label>
+                    <input type="text" id="userName" class="form-control shadow appearance-none border rounded w-full py-1 px-2 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />
+                </div>
+            }
+        }
         <input type="hidden" id="userName" class="form-control" />
-        <div class="col-lg-4">
-            Título<br />
-            <input type="text" id="title" class="form-control" />
+        <div class="w-full lg:w-auto flex-1">
+            <label for="title" class="block text-gray-700 text-sm font-bold mb-2">Título</label>
+            <input type="text" id="title" class="form-control shadow appearance-none border rounded w-full py-1 px-2 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />
         </div>
-        <div class="col-lg-2">
-            Período de Empréstimo<br />
-            <input type="number" id="dataInicial" class="form-control" min="1800" max="2100" placeholder="AAAA" />
+        <div class="w-full lg:w-auto flex-1">
+            <label for="dataInicial" class="block text-gray-700 text-sm font-bold mb-2">Período de Empréstimo</label>
+            <input type="number" id="dataInicial" class="form-control shadow appearance-none border rounded w-full py-1 px-2 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" min="1800" max="2100" placeholder="AAAA" />
         </div>
-        <div class="col-lg-2">
-            <br />
-            <input type="number" id="dataFinal" class="form-control" min="1800" max="2100" placeholder="AAAA" />
+        <div class="w-full lg:w-auto flex-1">
+            <label for="dataFinal" class="block text-gray-700 text-sm font-bold mb-2">Período de Empréstimo (Final)</label>
+            <input type="number" id="dataFinal" class="form-control shadow appearance-none border rounded w-full py-1 px-2 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" min="1800" max="2100" placeholder="AAAA" />
         </div>
-        <div class="col-lg-1">
-            <br />
-            <input type="button" id="btnFiltro" class="btn btn-success" value="Aplicar"
-                   onclick="aplicaFiltroConsultaAvancadaEmprestimo()" />
+        <div class="w-full lg:w-auto flex items-end">
+            <input type="button" id="btnFiltro" class="bg-gray-700 hover:bg-gray-800 hover:cursor-pointer text-white font-bold py-1 px-4 rounded focus:outline-none focus:shadow-outline" value="Aplicar" onclick="aplicaFiltroConsultaAvancadaEmprestimo()" />
         </div>
     </div>
 </fieldset>
-<div id="resultadoConsulta" class="table-responsive">
+<div id="resultadoConsulta" class="mt-4">
+    <!-- Resultados da consulta serão exibidos aqui -->
 </div>
