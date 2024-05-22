@@ -2,6 +2,7 @@
 using Library_Management_System.Models;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Text.RegularExpressions;
 
 namespace Library_Management_System.Controllers
 {
@@ -20,6 +21,10 @@ namespace Library_Management_System.Controllers
 
             if (string.IsNullOrEmpty(model.Email))
                 ModelState.AddModelError("Email", "Preencha o Email.");
+            else if (!Regex.IsMatch(model.Email, @"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"))
+            {
+                ModelState.AddModelError("Email", "Por favor, insira um endereço de e-mail válido.");
+            }
 
             if (string.IsNullOrEmpty(model.Password))
                 ModelState.AddModelError("Password", "Adicione uma senha.");

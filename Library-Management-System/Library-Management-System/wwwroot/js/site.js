@@ -84,7 +84,6 @@ $(document).ready(function () {
                     description = data.items[0].volumeInfo.description;
                 }
 
-                // Limit the description to a maximum number of characters (e.g., 200 characters)
                 var maxLength = 2000;
                 if (description.length > maxLength) {
                     description = description.substring(0, maxLength) + '...';
