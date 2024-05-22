@@ -1,12 +1,12 @@
 ﻿@model List<Library_Management_System.Models.BookViewModel>
 
-<h2 class="text-2xl font-bold text-center my-4">Livros</h2>
+<h2 class="text-2xl font-bold text-center pt-2 my-4">Livros</h2>
 
-<div class="flex justify-center mb-4">
+<div class="flex w-5/6 justify-end -mt-12 mb-4">
     @{
         if (Context.Session.GetString("Admin") == "true")
         {
-            <a href="/book/Create" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Registrar Livro</a>
+            <a href="/book/Create" class="bg-gray-700 hover:bg-gray-800 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Registrar Livro</a>
         }
         else
         {
@@ -16,7 +16,7 @@
 </div>
 
 <div class="flex justify-center">
-    <div class="w-full max-w-6xl">
+    <div class="w-full max-w-7xl">
         <table class="min-w-full bg-gray-700 text-white rounded-lg shadow">
             <thead>
                 <tr>
@@ -38,7 +38,7 @@
                         <td class="py-2 px-4 text-left">@book.CategoryId - @book.CategoryDescription</td>
                         <td class="py-2 px-4 text-left">@book.PublishedYear</td>
                         <td class="py-2 px-4 text-left">
-                            <img id="imgPreview" src="data:image/jpeg;base64,@Convert.ToBase64String(@book.Image)" class="img-responsive w-12 h-auto transition-transform transform cursor-pointer hover:scale-150" width="50" />
+                            <img id="imgPreview" src="data:image/jpeg;base64,@book.ImageBase64" class="img-responsive w-12 h-auto transition-transform transform cursor-pointer hover:scale-150" width="50" />
                         </td>
                     </tr>
                 }
