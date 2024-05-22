@@ -27,28 +27,28 @@
                             if (Context.Session.GetString("Logado") == "true")
                             {
                                 <li>
-                                    <a class="hover:text-gray-400" asp-area="" asp-controller="Book" asp-action="Index">Livros</a>
+                                    <a class="hover:text-gray-400 text-sm" asp-area="" asp-controller="Book" asp-action="Index">Livros</a>
                                 </li>
                                 <li>
-                                    <a class="hover:text-gray-400" asp-area="" asp-controller="Loan" asp-action="Index">Empréstimos</a>
+                                    <a class="hover:text-gray-400 text-sm" asp-area="" asp-controller="Loan" asp-action="Index">Empréstimos</a>
                                 </li>
                                 if (Context.Session.GetString("Admin") == "true")
                                 {
                                     <li>
-                                        <a class="hover:text-gray-400" asp-area="" asp-controller="Author" asp-action="Index">Autores</a>
+                                        <a class="hover:text-gray-400 text-sm" asp-area="" asp-controller="Author" asp-action="Index">Autores</a>
                                     </li>
                                     <li>
-                                        <a class="hover:text-gray-400" asp-area="" asp-controller="Category" asp-action="Index">Categorias</a>
+                                        <a class="hover:text-gray-400 text-sm" asp-area="" asp-controller="Category" asp-action="Index">Categorias</a>
                                     </li>
                                     <li>
-                                        <a class="hover:text-gray-400" asp-area="" asp-controller="User" asp-action="Index">Usuário</a>
+                                        <a class="hover:text-gray-400 text-sm" asp-area="" asp-controller="User" asp-action="Index">Usuário</a>
                                     </li>
                                 }
                                 <li>
-                                    <a class="hover:text-gray-400" asp-area="" asp-controller="Book" asp-action="ExibeConsultaAvancada">Consulta Avançada de Livros</a>
+                                    <a class="hover:text-gray-400 text-sm" asp-area="" asp-controller="Book" asp-action="ExibeConsultaAvancada">Consulta Avançada de Livros</a>
                                 </li>
                                 <li>
-                                    <a class="hover:text-gray-400" asp-area="" asp-controller="Loan" asp-action="ExibeConsultaAvancada">Consulta Avançada de Empréstimos</a>
+                                    <a class="hover:text-gray-400 text-sm" asp-area="" asp-controller="Loan" asp-action="ExibeConsultaAvancada">Consulta Avançada de Empréstimos</a>
                                 </li>
                             }
                         }
