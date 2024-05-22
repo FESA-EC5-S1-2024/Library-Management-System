@@ -1,30 +1,42 @@
 ﻿@model IEnumerable<Library_Management_System.Models.AuthorViewModel>
 
-<div class="container">
-    <h2>Authors</h2>
-    <a href="@Url.Action("Create")" class="btn btn-success mb-2">Create New Author</a>
-    <table class="table table-dark">
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>Country</th>
-                <th>Birthdate</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (AuthorViewModel author in Model)
-            {
+<div class="container mx-auto px-4">
+    <h2 class="text-2xl font-bold text-center my-4">Autores</h2>
+    <div class="flex w-5/6 justify-end -mt-12 mb-4">
+        <a href="@Url.Action("Create")" class="bg-gray-700 hover:bg-gray-800 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Criar Novo Autor</a>
+    </div>
+    <div class="w-full max-w-6xl mx-auto bg-white shadow-lg rounded-lg overflow-hidden">
+        <table class="min-w-full bg-gray-700 text-white rounded-lg shadow">
+            <thead>
                 <tr>
-                    <td>@author.Name</td>
-                    <td>@author.Country</td>
-                    <td>@author.Birthdate.ToString("yyyy-MM-dd")</td>
-                    <td>
-                        <a href="/author/edit?id=@author.Id" class="btn btn-primary">Edit</a>
-                        <a href="javascript:deleteRecord('author', @author.Id)" class="btn btn-danger"> Delete</a>
-                    </td>
+                    <th class="py-4 px-6 text-left">Nome</th>
+                    <th class="py-4 px-6 text-left">País</th>
+                    <th class="py-4 px-6 text-left">Data de Nascimento</th>
+                    <th class="py-4 px-6 text-left">Ações</th>
                 </tr>
-            }
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                @foreach (var author in Model)
+                {
+                    <tr class="border-t border-gray-100">
+                        <td class="py-2 px-4 text-left">@author.Name</td>
+                        <td class="py-2 px-4 text-left">@author.Country</td>
+                        <td class="py-2 px-4 text-left">@author.Birthdate.ToString("yyyy-MM-dd")</td>
+                        <td class="py-2 px-4 text-left">
+                            <a href="/author/edit?id=@author.Id" class="ml-2 hover:text-gray-500">✏️</a>
+                            <a href="javascript:deleteRecord('author', @author.Id)" class="ml-2 hover:text-gray-500">❎</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
 </div>
+
+<script>
+    function deleteRecord(controller, id) {
+        if (confirm('Tem certeza que deseja excluir esse registro?')) {
+            window.location.href = '/' + controller + '/Delete?id=' + id;
+        }
+    }
+</script>
