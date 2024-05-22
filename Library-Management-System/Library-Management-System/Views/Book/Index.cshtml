@@ -41,7 +41,7 @@
                             {
                                 <td class="py-2 px-4 text-left">
                                     <a href="/book/edit?id=@book.Id" class="hover:text-gray-500">✏️</a>
-                                    <a href="javascript:deleteRecord('book', @book.Id)" class="ml-2 hover:text-gray-500">❎</a>
+                                    <a href="javascript:deleteRecord('book', @book.Id)" class="ml-2 hover:text-gray-500">❌</a>
                                 </td>
                             }
                         }
@@ -67,12 +67,6 @@
 </div>
 
 <script>
-    function deleteRecord(controller, id) {
-        if (confirm('Tem certeza que deseja excluir esse registro?')) {
-            window.location.href = '/' + controller + '/Delete?id=' + id;
-        }
-    }
-
     function openModal(src) {
         document.getElementById('modal').classList.remove('hidden');
         document.getElementById('modalImage').src = src;

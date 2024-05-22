@@ -24,7 +24,7 @@
                         <td class="py-2 px-4 text-left">@author.Birthdate.ToString("yyyy-MM-dd")</td>
                         <td class="py-2 px-4 text-left">
                             <a href="/author/edit?id=@author.Id" class="ml-2 hover:text-gray-500">✏️</a>
-                            <a href="javascript:deleteRecord('author', @author.Id)" class="ml-2 hover:text-gray-500">❎</a>
+                            <a href="javascript:deleteRecord('author', @author.Id)" class="ml-2 hover:text-gray-500">❌</a>
                         </td>
                     </tr>
                 }
@@ -32,11 +32,3 @@
         </table>
     </div>
 </div>
-
-<script>
-    function deleteRecord(controller, id) {
-        if (confirm('Tem certeza que deseja excluir esse registro?')) {
-            window.location.href = '/' + controller + '/Delete?id=' + id;
-        }
-    }
-</script>
